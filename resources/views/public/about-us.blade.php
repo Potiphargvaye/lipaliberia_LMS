@@ -2,14 +2,16 @@
 
 @section('title', 'About Us | Liberia Institute of Public Administration')
 
-@section('description', 'Learn about the Liberia Institute of Public Administration (LIPA), our history, mission, vision, and commitment to building public sector capacity through professional training, research, and consultancy.')
+@section('description',
+    'Learn about the Liberia Institute of Public Administration (LIPA), our history, mission,
+    vision, and commitment to building public sector capacity through professional training, research, and consultancy.')
 
 @section('content')
 
     <!-- Everything that was INSIDE <main> from about.html goes here -->
 
 
-<main>
+    <main>
         <!--? slider Area Start-->
         <section class="slider-area slider-area2">
             <div class="slider-active">
@@ -24,14 +26,14 @@
                                     <nav aria-label="breadcrumb">
                                         <ol class="breadcrumb">
                                             <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                                            <li class="breadcrumb-item"><a href="#">about</a></li> 
+                                            <li class="breadcrumb-item"><a href="#">about</a></li>
                                         </ol>
                                     </nav>
                                     <!-- breadcrumb End -->
                                 </div>
                             </div>
                         </div>
-                    </div>          
+                    </div>
                 </div>
             </div>
         </section>
@@ -45,7 +47,8 @@
                             </div>
                             <div class="features-caption">
                                 <h3>1,500+ Professionals</h3>
-                                <p>Public servants and professionals trained through quality capacity development programmes.</p>
+                                <p>Public servants and professionals trained through quality capacity development
+                                    programmes.</p>
                             </div>
                         </div>
                     </div>
@@ -56,7 +59,8 @@
                             </div>
                             <div class="features-caption">
                                 <h3>37 Training Programmes</h3>
-                                <p>Professional courses designed to strengthen leadership, governance, and public service.</p>
+                                <p>Professional courses designed to strengthen leadership, governance, and public service.
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -67,7 +71,8 @@
                             </div>
                             <div class="features-caption">
                                 <h3>2,250+ Graduates</h3>
-                                <p>Graduates equipped with practical skills to improve public sector performance nationwide.</p>
+                                <p>Graduates equipped with practical skills to improve public sector performance nationwide.
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -85,7 +90,9 @@
                     <div class="section-tittle section-tittle2 mb-55">
                         <div class="front-text">
                             <h2 class="">About LIPA Since 1969</h2>
-                            <p>Liberia Institute of Public Administration <b>(LIPA)</b> is Liberia's premier institution dedicated to training and developing public servants through quality education, professional development, research, and consultancy services.</p>
+                            <p>Liberia Institute of Public Administration <b>(LIPA)</b> is Liberia's premier institution
+                                dedicated to training and developing public servants through quality education, professional
+                                development, research, and consultancy services.</p>
                         </div>
                     </div>
                     <div class="single-features">
@@ -93,7 +100,8 @@
                             <img src="assets/img/icon/right-icon.svg" alt="">
                         </div>
                         <div class="features-caption">
-                            <p>Established in 1969, LIPA has remained committed to building public sector capacity and promoting national development.</p>
+                            <p>Established in 1969, LIPA has remained committed to building public sector capacity and
+                                promoting national development.</p>
                         </div>
                     </div>
                     <div class="single-features">
@@ -101,7 +109,8 @@
                             <img src="assets/img/icon/right-icon.svg" alt="">
                         </div>
                         <div class="features-caption">
-                            <p>We deliver professional training programmes that strengthen leadership, management, governance, and public administration.</p>
+                            <p>We deliver professional training programmes that strengthen leadership, management,
+                                governance, and public administration.</p>
                         </div>
                     </div>
 
@@ -110,24 +119,22 @@
                             <img src="assets/img/icon/right-icon.svg" alt="">
                         </div>
                         <div class="features-caption">
-                            <p>Our research and consultancy services support government institutions in improving performance, accountability, and service delivery.</p>
+                            <p>Our research and consultancy services support government institutions in improving
+                                performance, accountability, and service delivery.</p>
                         </div>
                     </div>
                 </div>
                 <div class="right-content1">
-    <div class="right-img">
-        <iframe
-            width="100%"
-            height="500"
-           src="https://www.youtube.com/embed/cHiDEkoZ_r0?autoplay=1&mute=1&loop=1&playlist=cHiDEkoZ_r0&rel=0"
-            title="Liberia Institute of Public Administration"
-            frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowfullscreen>
-        </iframe>
+                    <div class="right-img">
+                        <iframe width="100%" height="500"
+                            src="https://www.youtube.com/embed/cHiDEkoZ_r0?autoplay=1&mute=1&loop=1&playlist=cHiDEkoZ_r0&rel=0"
+                            title="Liberia Institute of Public Administration" frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            allowfullscreen>
+                        </iframe>
 
-    </div>
-</div>
+                    </div>
+                </div>
             </div>
         </section>
         <!-- About Area End -->
@@ -137,7 +144,7 @@
                 <div class="row justify-content-center">
                     <div class="col-xl-7 col-lg-8">
                         <div class="section-tittle text-center mb-55">
-                           <h2>Our Core Areas of Excellence</h2>
+                            <h2>Our Core Areas of Excellence</h2>
                         </div>
                     </div>
                 </div>
@@ -145,7 +152,8 @@
                     <div class="col-lg-3 col-md-4 col-sm-6">
                         <div class="single-topic text-center mb-30">
                             <div class="topic-img">
-                               <img src="{{ asset('lipa-liberia-public-site/assets/img/gallery/lipa_logo2 (1).png') }}" alt="">
+                                <img src="{{ asset('lipa-liberia-public-site/assets/img/gallery/lipa_logo2 (1).png') }}"
+                                    alt="">
                                 <div class="topic-content-box">
                                     <div class="topic-content">
                                         <h3><a href="#">Public Sector Training</a></h3>
@@ -157,8 +165,9 @@
                     <div class="col-lg-3 col-md-4 col-sm-6">
                         <div class="single-topic text-center mb-30">
                             <div class="topic-img">
-                               
-                                <img src="{{ asset('lipa-liberia-public-site/assets/img/gallery/lipa_logo2 (1).png') }}" alt="">
+
+                                <img src="{{ asset('lipa-liberia-public-site/assets/img/gallery/lipa_logo2 (1).png') }}"
+                                    alt="">
                                 <div class="topic-content-box">
                                     <div class="topic-content">
                                         <h3><a href="#">Research & Consultancy</a></h3>
@@ -170,7 +179,8 @@
                     <div class="col-lg-3 col-md-4 col-sm-6">
                         <div class="single-topic text-center mb-30">
                             <div class="topic-img">
-                                <img src="{{ asset('lipa-liberia-public-site/assets/img/gallery/lipa_logo2 (1).png') }}" alt="">
+                                <img src="{{ asset('lipa-liberia-public-site/assets/img/gallery/lipa_logo2 (1).png') }}"
+                                    alt="">
                                 <div class="topic-content-box">
                                     <div class="topic-content">
                                         <h3><a href="#">Leadership Development</a></h3>
@@ -182,7 +192,8 @@
                     <div class="col-lg-3 col-md-4 col-sm-6">
                         <div class="single-topic text-center mb-30">
                             <div class="topic-img">
-                                 <img src="{{ asset('lipa-liberia-public-site/assets/img/gallery/lipa_logo2 (1).png') }}" alt="">
+                                <img src="{{ asset('lipa-liberia-public-site/assets/img/gallery/lipa_logo2 (1).png') }}"
+                                    alt="">
                                 <div class="topic-content-box">
                                     <div class="topic-content">
                                         <h3><a href="#">Public Administration</a></h3>
@@ -194,7 +205,8 @@
                     <div class="col-lg-3 col-md-4 col-sm-6">
                         <div class="single-topic text-center mb-30">
                             <div class="topic-img">
-                                  <img src="{{ asset('lipa-liberia-public-site/assets/img/gallery/lipa_logo2 (1).png') }}" alt="">
+                                <img src="{{ asset('lipa-liberia-public-site/assets/img/gallery/lipa_logo2 (1).png') }}"
+                                    alt="">
                                 <div class="topic-content-box">
                                     <div class="topic-content">
                                         <h3><a href="#">Procurement Management</a></h3>
@@ -206,7 +218,8 @@
                     <div class="col-lg-3 col-md-4 col-sm-6">
                         <div class="single-topic text-center mb-30">
                             <div class="topic-img">
-                                <img src="{{ asset('lipa-liberia-public-site/assets/img/gallery/lipa_logo2 (1).png') }}" alt="">
+                                <img src="{{ asset('lipa-liberia-public-site/assets/img/gallery/lipa_logo2 (1).png') }}"
+                                    alt="">
                                 <div class="topic-content-box">
                                     <div class="topic-content">
                                         <h3><a href="#">Public Financial Management</a></h3>
@@ -218,7 +231,8 @@
                     <div class="col-lg-3 col-md-4 col-sm-6">
                         <div class="single-topic text-center mb-30">
                             <div class="topic-img">
-                                 <img src="{{ asset('lipa-liberia-public-site/assets/img/gallery/lipa_logo2 (1).png') }}" alt="">
+                                <img src="{{ asset('lipa-liberia-public-site/assets/img/gallery/lipa_logo2 (1).png') }}"
+                                    alt="">
                                 <div class="topic-content-box">
                                     <div class="topic-content">
                                         <h3><a href="#">HR & Performance Management</a></h3>
@@ -230,7 +244,8 @@
                     <div class="col-lg-3 col-md-4 col-sm-6">
                         <div class="single-topic text-center mb-30">
                             <div class="topic-img">
-                                 <img src="{{ asset('lipa-liberia-public-site/assets/img/gallery/lipa_logo2 (1).png') }}" alt="">
+                                <img src="{{ asset('lipa-liberia-public-site/assets/img/gallery/lipa_logo2 (1).png') }}"
+                                    alt="">
                                 <div class="topic-content-box">
                                     <div class="topic-content">
                                         <h3><a href="#">Policy Analysis & Strategic Planning</a></h3>
@@ -256,12 +271,14 @@
                 <div class="right-content3">
                     <!-- img -->
                     <div class="right-img">
-                        <img src="{{ asset('lipa-liberia-public-site/assets/img/hero/lipa_building2.png') }}" alt="">
+                        <img src="{{ asset('lipa-liberia-public-site/assets/img/hero/lipa_building2.png') }}"
+                            alt="">
                     </div>
                 </div>
                 <div class="left-content3">
+
                     <!-- section tittle -->
-                    <div class="section-tittle section-tittle2 mb-20">   
+                    <div class="section-tittle section-tittle2 mb-20">
                         <div class="front-text">
                             <h2 class="">Why Choose LIPA?</h2>
                         </div>
@@ -271,7 +288,8 @@
                             <img src="assets/img/icon/right-icon.svg" alt="">
                         </div>
                         <div class="features-caption">
-                            <p>Receive practical training designed to strengthen leadership, governance, and public sector management skills.</p>
+                            <p>Receive practical training designed to strengthen leadership, governance, and public sector
+                                management skills.</p>
                         </div>
                     </div>
                     <div class="single-features">
@@ -279,7 +297,8 @@
                             <img src="assets/img/icon/right-icon.svg" alt="">
                         </div>
                         <div class="features-caption">
-                          <p>Learn from experienced facilitators and public administration professionals with extensive government expertise.</p>
+                            <p>Learn from experienced facilitators and public administration professionals with extensive
+                                government expertise.</p>
                         </div>
                     </div>
                     <div class="single-features">
@@ -288,68 +307,291 @@
                             <img src="{{ asset('lipa-liberia-public-site/assets/img//team4.png') }}" alt="">
                         </div>
                         <div class="features-caption">
-                            <p>Build the knowledge and competencies needed to improve public service delivery and national development.</p>
+                            <p>Build the knowledge and competencies needed to improve public service delivery and national
+                                development.</p>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
         <!-- About Area End -->
+
+        <!--? Leadership Preview Start -->
+        <section class="team-area section-padding40" id="leadership-section">
+            <div class="container">
+
+                <!-- Section Heading -->
+                <div class="row justify-content-center">
+                    <div class="col-xl-8 col-lg-9">
+                        <div class="section-tittle text-center mb-60">
+                            <h2 class="leadership-title">Meet Our Leadership</h2>
+                            <p>
+                                Meet the dedicated leaders guiding the Liberia Institute of Public Administration
+                                in advancing public sector capacity, leadership, good governance,
+                                and institutional excellence across Liberia.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Board Chair -->
+                <div class="row align-items-center mb-80">
+
+                    <div class="col-lg-4 col-md-5 text-center mb-4 mb-lg-0">
+
+                        <img src="{{ asset('lipa-liberia-public-site/assets/img/team/Emmanuel-board-chariman.jpg') }}"
+                            alt="Board Chair" class="img-fluid rounded-circle shadow"
+                            style="width:220px;height:220px;object-fit:cover;">
+
+                    </div>
+
+                    <div class="col-lg-8 col-md-7">
+
+                        <span class="text-uppercase text-primary font-weight-bold">
+                            Board Chair
+                        </span>
+
+                        <h3 class="mb-3">
+                            Cllr. Emmanuel A. Tulay, Sr.
+                        </h3>
+
+                        <h5 class="text-muted mb-4">
+                            Statement from the Board Chair
+                        </h5>
+
+                        <p>
+                            Welcome to the Liberia Institute of Public Administration.
+                            Our commitment is to strengthen public sector institutions through
+                            quality education, leadership development, accountability,
+                            and professional excellence.
+                        </p>
+
+                        <p>
+                            We remain dedicated to promoting integrity, innovation,
+                            transparency, and sustainable national development for Liberia.
+                        </p>
+
+                        <a href="" class="genric-btn primary radius">
+                            Read Full Leadership Message
+                        </a>
+
+                    </div>
+
+                </div>
+
+                <!-- Leadership Cards -->
+
+                <div class="row mt-5">
+
+                    <!-- Director General -->
+
+                    <div class="col-lg-3 col-md-6 col-sm-6">
+
+                        <div class="single-cat text-center mb-30">
+
+                            <div class="cat-icon">
+
+                                <img src="{{ asset('lipa-liberia-public-site/assets/img/team/DG.png') }}"
+                                    alt="Director General">
+
+                            </div>
+
+                            <div class="cat-cap">
+
+                                <span class="text-primary d-block mb-2"
+                                    style="font-size:13px; font-weight:600; letter-spacing:0.8px; text-transform:uppercase;">
+                                    Director General
+                                </span>
+
+                                <h5 class="mb-0" style="font-size:18px; font-weight:700;">
+                                    Hon. Nee-Alah T. Varpilah
+                                </h5>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!-- Deputy Director -->
+
+                    <div class="col-lg-3 col-md-6 col-sm-6">
+
+                        <div class="single-cat text-center mb-30">
+
+                            <div class="cat-icon">
+
+                                <img src="{{ asset('lipa-liberia-public-site/assets/img/team/wah-deputy-director.jpeg') }}"
+                                    alt="Deputy Director">
+
+                            </div>
+
+                            <div class="cat-cap">
+
+                                <span class="text-primary d-block mb-2"
+                                    style="font-size:13px; font-weight:600; letter-spacing:0.8px; text-transform:uppercase;">
+                                    Deputy Director
+                                </span>
+
+                                <h5 class="mb-0" style="font-size:18px; font-weight:700;">
+                                    Hon. Atty. Michael B. Wah Jr.
+                                </h5>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!-- Deputy Director -->
+
+                    <div class="col-lg-3 col-md-6 col-sm-6">
+
+                        <div class="single-cat text-center mb-30">
+
+                            <div class="cat-icon">
+
+                                <img src="{{ asset('lipa-liberia-public-site/assets/img/team/jarso-institution-member.png') }}"
+                                    alt="Deputy Director">
+
+                            </div>
+
+                            <div class="cat-cap">
+
+                                <span class="text-primary d-block mb-2"
+                                    style="font-size:13px; font-weight:600; letter-spacing:0.8px; text-transform:uppercase;">
+                                    Institutional Member
+                                </span>
+
+                                <h5 class="mb-0" style="font-size:18px; font-weight:700;">
+                                    Dr. Jarso Maley Jallah
+                                </h5>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!-- Head of ICT -->
+
+                    <div class="col-lg-3 col-md-6 col-sm-6">
+
+                        <div class="single-cat text-center mb-30">
+
+                            <div class="cat-icon">
+
+                                <img src="{{ asset('lipa-liberia-public-site/assets/img/team/DG.png') }}"
+                                    alt="Head of ICT">
+
+                            </div>
+
+                            <div class="cat-cap">
+
+                                <span class="text-primary d-block mb-2"
+                                    style="font-size:13px; font-weight:600; letter-spacing:0.8px; text-transform:uppercase;">
+                                    Head of ICT
+                                </span>
+
+                                <h5 class="mb-0" style="font-size:18px; font-weight:700;">
+                                    Mr. Joseph R. Massaley
+                                </h5>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- Button -->
+
+                <div class="row">
+
+                    <div class="col-12">
+
+                        <div class="section-tittle text-center mt-20">
+
+                            <a href="" class="border-btn">
+                                View Full Leadership Team
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+        <!-- Leadership Preview End -->
         <!--? Team -->
-        <section class="team-area section-padding40 fix">
+        <section class="team-area section-padding40 fix" id="testimonials-section">
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-xl-7 col-lg-8">
                         <div class="section-tittle text-center mb-55">
                             <h2>What Our Participants Say</h2>
-                          <p>Hear from professionals who have strengthened their leadership, management, and public service skills through LIPA's training programmes.</p>
+                            <p>Hear from professionals who have strengthened their leadership, management, and public
+                                service skills through LIPA's training programmes.</p>
                         </div>
                     </div>
                 </div>
                 <div class="team-active">
-                    <div class="single-cat text-center"> 
+                    <div class="single-cat text-center">
                         <div class="cat-icon">
-                           <img src="{{ asset('lipa-liberia-public-site/assets/img/gallery/user_avatar.jpg') }}" alt="">
+                            <img src="{{ asset('lipa-liberia-public-site/assets/img/gallery/user_avatar.jpg') }}"
+                                alt="">
                         </div>
                         <div class="cat-cap">
                             <h5><a href="services.html">Sarah Johnson</a></h5>
-                            <p>LIPA's training strengthened my procurement knowledge and improved my confidence in delivering quality public services.</p>
+                            <p>LIPA's training strengthened my procurement knowledge and improved my confidence in
+                                delivering quality public services.</p>
                         </div>
                     </div>
                     <div class="single-cat text-center">
                         <div class="cat-icon">
-                           <img src="{{ asset('lipa-liberia-public-site/assets/img/gallery/user_avatar.jpg') }}" alt="">
+                            <img src="{{ asset('lipa-liberia-public-site/assets/img/gallery/user_avatar.jpg') }}"
+                                alt="">
                         </div>
                         <div class="cat-cap">
                             <h5><a href="services.html">Michael Williams</a></h5>
-                            <p>The practical learning experience helped me improve workplace performance and develop effective leadership skills.</p>
+                            <p>The practical learning experience helped me improve workplace performance and develop
+                                effective leadership skills.</p>
                         </div>
                     </div>
                     <div class="single-cat text-center">
                         <div class="cat-icon">
-                            <img src="{{ asset('lipa-liberia-public-site/assets/img/gallery/user_avatar.jpg') }}" alt="">
+                            <img src="{{ asset('lipa-liberia-public-site/assets/img/gallery/user_avatar.jpg') }}"
+                                alt="">
                         </div>
                         <div class="cat-cap">
                             <h5><a href="services.html">Grace Anderson</a></h5>
-                            <p>The facilitators were knowledgeable, and the training provided practical solutions that I immediately applied at work.</p>
+                            <p>The facilitators were knowledgeable, and the training provided practical solutions that I
+                                immediately applied at work.</p>
                         </div>
                     </div>
                     <div class="single-cat text-center">
                         <div class="cat-icon">
-                            <img src="{{ asset('lipa-liberia-public-site/assets/img/gallery/user_avatar.jpg') }}" alt="">
+                            <img src="{{ asset('lipa-liberia-public-site/assets/img/gallery/user_avatar.jpg') }}"
+                                alt="">
                         </div>
                         <div class="cat-cap">
                             <h5><a href="services.html">David Cooper</a></h5>
-                            <p>LIPA offers high-quality professional development that equips participants with practical tools for better decision-making.</p>
+                            <p>LIPA offers high-quality professional development that equips participants with practical
+                                tools for better decision-making.</p>
                         </div>
                     </div>
                     <div class="single-cat text-center">
                         <div class="cat-icon">
-                            <img src="{{ asset('lipa-liberia-public-site/assets/img/gallery/user_avatar.jpg') }}" alt="">
+                            <img src="{{ asset('lipa-liberia-public-site/assets/img/gallery/user_avatar.jpg') }}"
+                                alt="">
                         </div>
                         <div class="cat-cap">
                             <h5><a href="services.html">Emily Roberts</a></h5>
-                            <p>The programme enhanced my leadership abilities and prepared me to contribute more effectively to national development.</p>
+                            <p>The programme enhanced my leadership abilities and prepared me to contribute more effectively
+                                to national development.</p>
                         </div>
                     </div>
                 </div>
@@ -358,11 +600,32 @@
         <!-- Services End -->
     </main>
 
+    <style>
+        .leadership-title {
+            font-size: 38px;
+            font-weight: 700;
+            line-height: 1.3;
+        }
 
+        .single-cat .cat-icon img {
+            width: 170px;
+            height: 170px;
+            object-fit: cover;
+            border-radius: 50%;
+            margin: auto;
+        }
 
+        #leadership-section {
+            padding-bottom: 20px;
+        }
 
+        #testimonials-section {
+            padding-top: 20px;
+        }
 
-
-
-
-      @endsection
+        #leadership-section .section-tittle.mt-20 {
+            margin-top: 10px !important;
+            margin-bottom: 10px !important;
+        }
+    </style>
+@endsection

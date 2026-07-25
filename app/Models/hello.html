@@ -68,3 +68,95 @@ This estimate includes the following phases:
 The proposed timeline assumes development by a single software developer and may be adjusted depending on project revisions, additional feature requests, client feedback, and the overall development schedule.
 Future Focus Academy will be kept informed of project progress through periodic updates and milestone reviews throughout the development process.
 
+
+
+
+
+
+The Refactoring Roadmap
+
+I suggest we tackle this in the following order:
+
+Step 1: Clean up middleware
+Remove the custom RoleMiddleware.
+Use only Spatie's middleware.
+Step 2: Refactor the Roles module
+Build a proper Role Management page.
+Manage roles dynamically from the database.
+Step 3: Refactor Permissions
+Create meaningful LMS permissions such as:
+manage users
+manage courses
+manage lessons
+manage enrollments
+manage assignments
+manage quizzes
+manage certificates
+manage announcements
+manage reports
+Step 4: Assign permissions to roles
+Build or improve the role-permission assignment interface.
+Step 5: Refactor User Management
+Populate the role dropdown from the roles table.
+Assign the selected role using Spatie's methods (assignRole() or syncRoles() to enforce one role).
+Step 6: Merge Admin and Teacher into a Staff Dashboard
+One dashboard.
+One sidebar.
+Permission-driven navigation.
+
+
+
+Admin
+
+Access Control
+│
+├── Roles
+│      List Roles
+│      Create Role
+│      Edit Role
+│      Delete Role
+│
+├── Permissions
+│      List Permissions
+│      Create Permission
+│      Edit Permission
+│
+├── Role Permissions
+│      Assign permissions to roles
+│
+└── User Roles
+       Assign roles to users
+
+
+       users
+-------------------
+Authentication
+Login
+Image
+Status
+Last Login
+
+staff
+-------------------
+Employment
+Salary
+Contract
+Working Schedule
+Phone Numbers
+National ID
+Documents
+
+students
+-------------------
+Academic Information
+Programme
+Enrollment
+Intake
+Guardian (if needed)
+
+roles
+permissions
+model_has_roles
+
+
+Okay before we start this stidents work flow i want us to use codex AI to quickly build  and complate this student model for us if it recommended so that we can give it a require deep prompt to create this moudul for us include the controller file db migration script, and the blade with all the models but before that i wnat us to take  quick over view of the old system table UI expecially the student management life circle from that view amd i wnat us to adopt to this management life circle if recommande from student regisgration approvial and complate or dropout all happen in the same blade file via liveware we have in our laravel project or we can define it our own way but the same logic. And  for the registration  also  here are the exact field inputs that LIPA collect from it applicaants or student pls note it too 

@@ -1,0 +1,357 @@
+<?php
+
+/**
+ * Central course catalogue for LIPA.
+ *
+ * Each entry is keyed by a unique slug — that slug is what appears in the
+ * URL (/courses/{slug}) and is what the Course Details page uses to look
+ * up exactly one course. Add a new course by adding a new array entry here;
+ * both courses.blade.php (the listing) and course-details.blade.php (the
+ * single-course page) read from this file, so nothing needs to be duplicated.
+ *
+ * NOTE ON PLACEHOLDER CONTENT: the original course cards only had a title,
+ * short description, fee, and duration. 'target_audience', 'entry_requirements',
+ * 'learning_outcomes', and 'schedule' are reasonable placeholder text inferred
+ * from each course's category — replace with LIPA's actual programme details
+ * whenever they're available.
+ */
+
+return [
+
+    // ================= CERTIFICATE LEVEL COURSES =================
+
+    'public-procurement-management' => [
+        'group' => 'certificate',
+        'group_label' => 'Certificate Level Courses',
+        'category' => 'Public Procurement Management',
+        'title' => 'Public Procurement Management',
+        'image' => 'image1.jpg',
+        'overview' => 'Develop practical procurement planning, compliance, and contract management skills for effective public sector service delivery.',
+        'target_audience' => 'Procurement officers, contract administrators, and public sector employees involved in purchasing and supply chain functions.',
+        'entry_requirements' => 'Open to civil servants and professionals; a first degree or relevant work experience is recommended.',
+        'learning_outcomes' => [
+            'Apply public procurement planning principles in a government context',
+            'Ensure compliance with procurement laws and regulations',
+            'Manage contracts from award through close-out',
+            'Evaluate bids and proposals objectively and transparently',
+        ],
+        'fee' => '$265',
+        'duration' => '48 hours (1–6 weeks).',
+        'schedule' => 'Weekday sessions, 2:00 PM – 4:00 PM',
+        'seats' => 35,
+        'programme_type' => 'Certificate Programme',
+    ],
+
+    'project-planning-management' => [
+        'group' => 'certificate',
+        'group_label' => 'Certificate Level Courses',
+        'category' => 'project planning management',
+        'title' => 'Project Planning & Management',
+        'image' => 'image2.jpg',
+        'overview' => 'Strengthen project leadership, planning, monitoring, and implementation skills for complex public sector programmes.',
+        'target_audience' => 'Project officers, programme coordinators, and managers responsible for planning or implementing public sector projects.',
+        'entry_requirements' => 'Open to civil servants and professionals; a first degree or relevant work experience is recommended.',
+        'learning_outcomes' => [
+            'Develop realistic project plans, budgets, and timelines',
+            'Apply monitoring tools to track project performance',
+            'Lead cross-functional project teams effectively',
+            'Manage project risk and stakeholder expectations',
+        ],
+        'fee' => '$265',
+        'duration' => '48 hours (1–6 weeks).',
+        'schedule' => 'Weekday sessions, 2:00 PM – 4:00 PM',
+        'seats' => 35,
+        'programme_type' => 'Certificate Programme',
+    ],
+
+    'monitoring-evaluation' => [
+        'group' => 'certificate',
+        'group_label' => 'Certificate Level Courses',
+        'category' => 'Monitoring & Evaluation',
+        'title' => 'Monitoring & Evaluation',
+        'image' => 'image3.jpg',
+        'overview' => 'Develop practical monitoring and evaluation skills to measure programme performance and improve organizational results.',
+        'target_audience' => 'M&E officers, programme staff, and managers responsible for tracking and reporting on public sector programmes.',
+        'entry_requirements' => 'Open to civil servants and professionals; a first degree or relevant work experience is recommended.',
+        'learning_outcomes' => [
+            'Design M&E frameworks aligned with programme objectives',
+            'Collect and analyse performance data effectively',
+            'Report on results to stakeholders and decision-makers',
+            'Use evaluation findings to improve programme delivery',
+        ],
+        'fee' => '$265',
+        'duration' => '48 hours (1–6 weeks)',
+        'schedule' => 'Weekday sessions, 2:00 PM – 4:00 PM',
+        'seats' => 20,
+        'programme_type' => 'Certificate Programme',
+    ],
+
+    'public-financial-management' => [
+        'group' => 'certificate',
+        'group_label' => 'Certificate Level Courses',
+        'category' => 'Public Financial Management',
+        'title' => 'Public Financial Management',
+        'image' => 'image4.jpg',
+        'overview' => 'Strengthen budgeting, accountability, and financial management skills for improved public sector performance and governance.',
+        'target_audience' => 'Civil servants in finance, accounting, and procurement roles, development partners, and career explorers interested in public financial management.',
+        'entry_requirements' => 'Open to civil servants and professionals; a first degree or relevant work experience is recommended.',
+        'learning_outcomes' => [
+            'Apply public sector budgeting principles and cycles',
+            'Strengthen financial reporting and accountability practices',
+            'Identify and mitigate financial management risks',
+            'Support compliant and transparent use of public funds',
+        ],
+        'fee' => '$265',
+        'duration' => '48 hours (1–6 weeks)',
+        'schedule' => 'Weekday sessions, 2:00 PM – 4:00 PM',
+        'seats' => 25,
+        'programme_type' => 'Certificate Programme',
+    ],
+
+    'hr-performance-management' => [
+        'group' => 'certificate',
+        'group_label' => 'Certificate Level Courses',
+        'category' => 'HR & Performance Management',
+        'title' => 'HR & Performance Management',
+        'image' => 'image5.jpg',
+        'overview' => "Covers HR procedures, Liberia's Labor Law, the Decent Work Act, Civil Service orders, and practical planning and recruitment tools for public institutions.",
+        'target_audience' => 'HR managers, public sector leaders, and young professionals working in or entering human resource management roles.',
+        'entry_requirements' => 'Open to civil servants and professionals; a first degree or relevant work experience is recommended.',
+        'learning_outcomes' => [
+            'Apply core HR management principles in a public sector context',
+            'Design and conduct fair performance appraisals',
+            'Support staff development and succession planning',
+            'Handle workplace performance issues constructively',
+        ],
+        'fee' => '$265',
+        'duration' => '48 hours (1–6 weeks)',
+        'schedule' => 'Weekday sessions, 2:00 PM – 4:00 PM',
+        'seats' => 20,
+        'programme_type' => 'Certificate Programme',
+    ],
+
+    'internal-audit-control' => [
+        'group' => 'certificate',
+        'group_label' => 'Certificate Level Courses',
+        'category' => 'Internal Audit & Control',
+        'title' => 'Internal Audit & Control',
+        'image' => 'image6.jpg',
+        'overview' => 'Covers internal audit concepts, policies, and control frameworks, with an emphasis on applying audit recommendations to drive organizational improvement.',
+        'target_audience' => 'Comptrollers, financial managers, auditors, and public sector leaders responsible for institutional controls.',
+        'entry_requirements' => 'Open to civil servants and professionals; a first degree or relevant work experience is recommended.',
+        'learning_outcomes' => [
+            'Plan and conduct internal audit engagements',
+            'Assess and strengthen internal control systems',
+            'Identify and manage organizational risk',
+            'Report audit findings clearly and objectively',
+        ],
+        'fee' => '$265',
+        'duration' => '48 hours (1–6 weeks)',
+        'schedule' => 'Weekday sessions, 2:00 PM – 4:00 PM',
+        'seats' => 20,
+        'programme_type' => 'Certificate Programme',
+    ],
+
+    'administrative-management' => [
+        'group' => 'certificate',
+        'group_label' => 'Certificate Level Courses',
+        'category' => 'Administrative Management',
+        'title' => 'Administrative Management',
+        'image' => 'image7.jpg',
+        'overview' => 'Covers office management practices, administrative procedures, and practical use of workplace technology tools such as Google Workspace, Microsoft Teams, and Zoom.',
+        'target_audience' => 'Executive office staff and leaders across government, NGO, and private sector institutions.',
+        'entry_requirements' => 'Open to civil servants and professionals; a first degree or relevant work experience is recommended.',
+        'learning_outcomes' => [
+            'Apply modern office administration practices',
+            'Improve organizational efficiency and record-keeping',
+            'Communicate professionally in a public sector workplace',
+            'Support effective coordination across departments',
+        ],
+        'fee' => '$265',
+        'duration' => '48 hours (1–6 weeks)',
+        'schedule' => 'Weekday sessions, 2:00 PM – 4:00 PM',
+        'seats' => 20,
+        'programme_type' => 'Certificate Programme',
+    ],
+
+    'public-sector-policy-analysis' => [
+        'group' => 'certificate',
+        'group_label' => 'Certificate Level Courses',
+        'category' => 'Public Sector Policy Analysis',
+        'title' => 'Public Sector Policy Analysis',
+        'image' => 'image8.jpg',
+        'overview' => 'Develop policy analysis and strategic planning skills to support effective governance and national development.',
+        'target_audience' => 'Policy officers, planners, and managers involved in strategy or policy development for public institutions.',
+        'entry_requirements' => 'Open to civil servants and professionals; a first degree or relevant work experience is recommended.',
+        'learning_outcomes' => [
+            'Apply structured approaches to policy analysis',
+            'Develop strategic plans aligned with institutional goals',
+            'Evaluate policy options and trade-offs',
+            'Communicate policy recommendations to decision-makers',
+        ],
+        'fee' => '$265',
+        'duration' => '48 hours (1–6 weeks)',
+        'schedule' => 'Weekday sessions, 2:00 PM – 4:00 PM',
+        'seats' => 20,
+        'programme_type' => 'Certificate Programme',
+    ],
+
+    // ================= FLAGSHIP TRAINING PROGRAMMES =================
+
+    'young-public-administrators-i' => [
+        'group' => 'flagship',
+        'group_label' => 'Flagship Training Programmes',
+        'category' => 'Youth Leadership Development',
+        'title' => 'Young Public Administrators Programme I',
+        'image' => 'image4.jpg',
+        'overview' => 'A structured programme for high school and early-university students aspiring to public service careers, combining general knowledge with specialization tracks.',
+        'target_audience' => 'High school graduates and early-university students preparing for leadership roles in government.',
+        'entry_requirements' => 'Open to recent graduates and early-career civil servants; a first degree is recommended.',
+        'learning_outcomes' => [
+            'Build foundational public sector leadership skills',
+            'Understand governance structures and institutional roles',
+            'Develop a personal career development plan',
+            'Apply professional conduct standards in public service',
+        ],
+        'fee' => '$150',
+        'duration' => '6 Weeks',
+        'schedule' => 'Weekday sessions, 9:00 AM – 12:00 PM',
+        'seats' => 25,
+        'programme_type' => 'Flagship Training',
+    ],
+
+    'young-public-administrators-ii' => [
+        'group' => 'flagship',
+        'group_label' => 'Flagship Training Programmes',
+        'category' => 'Youth Leadership Development',
+        'title' => 'Young Public Administrators Programme II',
+        'image' => 'image10.jpg',
+        'overview' => 'Supports the transition from school to work for college graduates, combining a general orientation with specific career tracks.',
+        'target_audience' => 'Prospective and recent college graduates.',
+        'entry_requirements' => 'College graduate or prospective college graduate.',
+        'learning_outcomes' => [
+            'Apply advanced leadership and decision-making techniques',
+            'Strengthen public administration competencies',
+            'Lead teams and initiatives within government institutions',
+            'Present and defend policy or programme proposals',
+        ],
+        'fee' => '$200',
+        'duration' => '6 Weeks',
+        'schedule' => 'Weekday sessions, 9:00 AM – 12:00 PM',
+        'seats' => 25,
+        'programme_type' => 'Flagship Training',
+    ],
+
+    'women-public-sector-leadership' => [
+        'group' => 'flagship',
+        'group_label' => 'Flagship Training Programmes',
+        'category' => 'Women in Public Sector Leadership',
+        'title' => 'Women in Public Sector Leadership',
+        'image' => 'image11.jpg',
+        'overview' => 'Leadership development for women in supervisory and managerial roles, building skills for gender-inclusive governance.',
+        'target_audience' => 'Female public servants serving as supervisors or managers, and women aspiring to leadership roles.',
+        'entry_requirements' => 'Woman in public service, holding a first degree, in a mid- to senior-level role.',
+        'learning_outcomes' => [
+            'Build confidence and strategic leadership capability',
+            'Navigate governance and institutional decision-making',
+            'Develop networks of support among public sector leaders',
+            'Apply management skills within a public sector context',
+        ],
+        'fee' => '$250',
+        'duration' => '50 hrs over 10 Saturdays.',
+        'schedule' => 'Weekday sessions, 2:00 PM – 5:00 PM',
+        'seats' => 25,
+        'programme_type' => 'Flagship Training',
+    ],
+
+    'service-officers-empowerment' => [
+        'group' => 'flagship',
+        'group_label' => 'Flagship Training Programmes',
+        'category' => 'Service Officers Empowerment Training',
+        'title' => 'Service Officers Empowerment Training',
+        'image' => 'image12.jpg',
+        'overview' => 'Post-retirement empowerment for service officers nearing or already in retirement, providing practical tools for continued growth.',
+        'target_audience' => 'Service officers nearing or in retirement, including those from law enforcement, healthcare, teaching, and related fields.',
+        'entry_requirements' => 'Open to public service officers nearing retirement or transitioning out of active service.',
+        'learning_outcomes' => [
+            'Plan for a successful transition beyond public service',
+            'Develop basic entrepreneurship and financial planning skills',
+            'Apply leadership experience to new ventures or community roles',
+            'Build a practical post-retirement action plan',
+        ],
+        'fee' => '$265',
+        'duration' => '60 Hrs over 10 weeks.',
+        'schedule' => 'Weekday sessions, 2:00 PM – 5:00 PM',
+        'seats' => 25,
+        'programme_type' => 'Flagship Training',
+    ],
+
+    // ================= PUBLIC SECTOR ORIENTATION PROGRAMMES =================
+
+    'public-service-orientation' => [
+        'group' => 'orientation',
+        'group_label' => 'Public Sector Orientation Programmes',
+        'category' => 'Public Service Orientation',
+        'title' => 'Public Service Orientation Programme',
+        'image' => 'image13.jpg',
+        'overview' => 'Build a strong foundation in public service values, ethics, and professional responsibilities for government institutions.',
+        'target_audience' => 'Newly appointed civil servants and staff new to public sector institutions.',
+        'entry_requirements' => 'Open to newly appointed public sector employees; no prior experience required.',
+        'learning_outcomes' => [
+            'Understand core public service values and ethics',
+            'Recognize professional responsibilities within government',
+            'Apply codes of conduct in day-to-day public service work',
+            'Build a strong foundation for a public service career',
+        ],
+        'fee' => '$265',
+        'duration' => '48 Hrs',
+        'schedule' => 'Weekday sessions, 2:00 PM – 4:00 PM',
+        'seats' => 30,
+        'programme_type' => 'Orientation Programme',
+    ],
+
+    'civil-service-development' => [
+        'group' => 'orientation',
+        'group_label' => 'Public Sector Orientation Programmes',
+        'category' => 'Civil Service Development',
+        'title' => 'Civil Service Development Programme',
+        'image' => 'image13.jpg',
+        'overview' => 'Strengthen administrative knowledge, workplace professionalism, and effective service delivery across public institutions.',
+        'target_audience' => 'Civil servants seeking to strengthen day-to-day administrative and professional skills.',
+        'entry_requirements' => 'Open to current civil servants; no prior formal training required.',
+        'learning_outcomes' => [
+            'Strengthen core administrative knowledge and skills',
+            'Apply workplace professionalism standards',
+            'Improve service delivery to the public',
+            'Support effective inter-departmental coordination',
+        ],
+        'fee' => '$265',
+        'duration' => '48 Hrs',
+        'schedule' => 'Weekday sessions, 2:00 PM – 4:00 PM',
+        'seats' => 30,
+        'programme_type' => 'Orientation Programme',
+    ],
+
+    'leadership-governance-orientation' => [
+        'group' => 'orientation',
+        'group_label' => 'Public Sector Orientation Programmes',
+        'category' => 'Leadership & Governance',
+        'title' => 'Leadership & Governance Orientation',
+        'image' => 'image5.jpg',
+        'overview' => 'Develop leadership, teamwork, and governance skills that support accountability and institutional excellence.',
+        'target_audience' => 'Public sector employees at any level seeking a foundation in leadership and governance principles.',
+        'entry_requirements' => 'Open to public sector employees; no prior formal training required.',
+        'learning_outcomes' => [
+            'Understand core governance and accountability principles',
+            'Apply basic leadership skills within a team setting',
+            'Recognize the link between governance and institutional excellence',
+            'Contribute effectively to a culture of accountability',
+        ],
+        'fee' => '$265',
+        'duration' => '48 Hrs',
+        'schedule' => 'Weekday sessions, 2:00 PM – 4:00 PM',
+        'seats' => 30,
+        'programme_type' => 'Orientation Programme',
+    ],
+
+];

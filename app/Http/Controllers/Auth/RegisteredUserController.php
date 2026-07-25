@@ -16,7 +16,7 @@ class RegisteredUserController extends Controller
     /**
      * Instantiate a new controller instance.
      */
-    
+
 
     /**
      * Show the registration form to the user.
@@ -32,40 +32,126 @@ class RegisteredUserController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'registration_id' => [
+
+            'name' => [
                 'required',
                 'string',
-                'max:255',
-                'unique:users,registration_id',
-                'regex:/^EDMOL\d{4}\/\d{4}$/',
+                'max:255'
             ],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-           'password' => [
-           'required',
-           'confirmed',
+
+            'email' => [
+                'required',
+                'email',
+                'unique:users,email'
             ],
-            'role' => ['required', 'in:student,teacher,admin'],
-            'image' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif', 'max:2048'],
+
+            'password' => [
+                'required',
+                'confirmed'
+            ],
+
+            'image' => [
+                'nullable',
+                'image',
+                'mimes:jpeg,png,jpg',
+                'max:2048'
+            ],
+
         ]);
+
 
         $imagePath = null;
+
+
         if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('profile-images', 'public');
+
+            $imagePath = $request
+                ->file('image')
+                ->store('profile-images', 'public');
         }
 
+
+
+        /*
+|--------------------------------------------------------------------------
+| Generate Student Registration ID
+|--------------------------------------------------------------------------
+*/
+
+        $year = now()->year;
+
+        $lastStudent = User::role('Student')
+            ->orderByDesc('id')
+            ->first();
+
+        $nextNumber = 1;
+
+        if (
+            $lastStudent &&
+            preg_match('/(\d+)$/', $lastStudent->registration_id, $matches)
+        ) {
+            $nextNumber = (int) $matches[1] + 1;
+        }
+
+        /*
+|--------------------------------------------------------------------------
+| Ensure Registration ID is Always Unique
+|--------------------------------------------------------------------------
+*/
+
+        do {
+
+            $registrationId =
+                'LIPA/STU/' .
+                $year .
+                '/' .
+                str_pad($nextNumber, 4, '0', STR_PAD_LEFT);
+
+            $nextNumber++;
+        } while (
+            User::where('registration_id', $registrationId)->exists()
+        );
+
+
         $user = User::create([
+
+            'registration_id' => $registrationId,
+
             'name' => $request->name,
-            'registration_id' => $request->registration_id,
+
             'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'role' => $request->role,
+
+            'password' => Hash::make(
+                $request->password
+            ),
+
             'image' => $imagePath,
+
+            'status' => 'active',
+            'created_by' => null,
+
         ]);
 
+
+
+        /*
+    |--------------------------------------------------------------------------
+    | Default public registration role
+    |--------------------------------------------------------------------------
+    */
+
+        $user->assignRole('Student');
+
+
+
         event(new Registered($user));
-      
-        return redirect()->route('admin.users.index')
-               ->with('success', 'User registered successfully!');
+
+
+        return redirect()
+            ->route('student.dashboard')
+            ->with(
+                'success',
+                'Registration successful. Your LIPA ID is ' . $registrationId
+            );
     }
 }

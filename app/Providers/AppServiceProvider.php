@@ -26,7 +26,7 @@ class AppServiceProvider extends ServiceProvider
     }
 
     /**
- * Bootstrap any application services.
+ * Bootstrap any application services. 
  */
 public function boot(): void
     {
@@ -35,21 +35,27 @@ public function boot(): void
             URL::forceScheme('https');
         }
 
-    // Register policies
-    $this->registerPolicies();
+    // Register policies  
+$this->registerPolicies();
 
-    // Define role-based authorization gates
-    Gate::define('is-student', function (User $user) {
-        return $user->role === 'student';
-    });
+// Student Portal
+Gate::define('is-student', function (User $user) {
+    return $user->hasRole('Student');
+});
 
-    Gate::define('is-teacher', function (User $user) {
-        return $user->role === 'teacher';
-    });
+// Shared Admin Dashboard (all staff)
+Gate::define('is-admin', function (User $user) {
+    return $user->hasAnyRole([
+        'Super Admin',
+        'Administrator',
+        'Teacher',
+        'Facilitator',
+        'HR',
+        'Finance',
+        'Registrar',
+    ]);
+});
 
-    Gate::define('is-admin', function (User $user) {
-        return $user->role === 'admin';
-    });
 }
 
     /**

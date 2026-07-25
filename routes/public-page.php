@@ -1,7 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-  use App\Http\Controllers\Public\PublicStudentController;
+use App\Http\Controllers\Public\PublicStudentController;
+
+use App\Http\Controllers\CourseController;
 
 Route::get('/', function () {
     return view('public.index'); // <- note the dot notation for subfolders
@@ -20,8 +22,8 @@ Route::get('/courses', function () {
 });
 
 
-Route::get('/teachers', function () {
-    return view('public.teachers');
+Route::get('/team', function () {
+    return view('public.team');
 });
 
 
@@ -54,3 +56,21 @@ Route::get('/student/register', [PublicStudentController::class, 'create'])
 
 Route::post('/student/register', [PublicStudentController::class, 'store'])
     ->name('public.students.store');
+
+
+
+/**
+ * Add these two lines to routes/web.php (near your other public routes).
+ * Requires: use App\Http\Controllers\CourseController;
+ */
+
+
+Route::get('/courses', [CourseController::class, 'index'])->name('courses.index');
+Route::get('/courses/{slug}', [CourseController::class, 'show'])->name('courses.show');
+
+/**
+ * IMPORTANT: register these BEFORE any catch-all/wildcard route you may
+ * already have (e.g. a generic {page} route for CMS pages), otherwise the
+ * wildcard route will intercept /courses/{slug} first and this will never
+ * be reached.
+ */

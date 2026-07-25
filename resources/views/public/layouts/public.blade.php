@@ -15,8 +15,7 @@
     @endif
 
     <link rel="manifest" href="{{ asset('lipa-liberia-public-site/site.webmanifest') }}">
-    <link rel="shortcut icon" type="image/x-icon"
-        href="{{ asset('lipa-liberia-public-site/assets/img/favicon.ico') }}">
+    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('lipa-liberia-public-site/assets/img/favicon.ico') }}">
 
     <!-- CSS -->
     <link rel="stylesheet" href="{{ asset('lipa-liberia-public-site/assets/css/bootstrap.min.css') }}">
@@ -57,7 +56,7 @@
     <!-- Header -->
     <header>
 
-        <div class="header-area header-transparent">  
+        <div class="header-area header-transparent">
 
             <div class="main-header">
 
@@ -74,7 +73,7 @@
 
                                     <a href="{{ url('/') }}">
 
-                                        <img src="{{ asset('lipa-liberia-public-site/assets/img/logo/logo_header.png') }}"
+                                        <img src="{{ asset('lipa-liberia-public-site/assets/img/logo/lipa-logo2.png') }}"
                                             alt="LIPA Logo">
 
                                     </a>
@@ -106,7 +105,7 @@
                                                 </li>
 
                                                 <li>
-                                                    <a href="{{ url('/teachers') }}">Faculty</a>
+                                                    <a href="{{ url('/team') }}">Our Team</a>
                                                 </li>
 
                                                 <li>
@@ -124,11 +123,11 @@
                                                 </li>
 
                                                 <li class="button-header">
-                                                    <a href="{{ route('login') }}" class="btn btn3">
-                                                        Student Portal
+                                                    <a href="{{ route('login') }}" id="student-portal-btn"
+                                                        class="btn btn3">
+                                                        <span id="student-portal-label">Student Portal</span>
                                                     </a>
                                                 </li>
-
                                             </ul>
 
                                         </nav>
@@ -163,97 +162,105 @@
 
     </main>
 
-     <footer>
-     <div class="footer-wrappper footer-bg">
-        <!-- Footer Start-->
-        <div class="footer-area footer-padding">
-            <div class="container">
-                <div class="row justify-content-between">
-                    <div class="col-xl-4 col-lg-5 col-md-4 col-sm-6">
-                        <div class="single-footer-caption mb-50">
-                            <div class="single-footer-caption mb-30">
-                                <!-- logo -->
-                                <div class="footer-logo mb-25">
-                                    <a href="index.html"><img src="assets/img/logo/logo2_footer.png" alt=""></a>
-                                </div>
-                                <div class="footer-tittle">
-                                    <div class="footer-pera">
-                                        <p>The automated process starts as soon as your clothes go into the machine.</p>
+    <footer>
+        <div class="footer-wrappper footer-bg">
+            <!-- Footer Start-->
+            <div class="footer-area footer-padding">
+                <div class="container">
+                    <div class="row justify-content-between">
+                        <div class="col-xl-4 col-lg-5 col-md-4 col-sm-6">
+                            <div class="single-footer-caption mb-50">
+                                <div class="single-footer-caption mb-30">
+                                    <!-- logo -->
+                                    <div class="footer-logo mb-25">
+                                        <a href="index.html"><img src="assets/img/logo/logo2_footer.png"
+                                                alt=""></a>
+                                    </div>
+                                    <div class="footer-tittle">
+                                        <div class="footer-pera">
+                                            <p>The automated process starts as soon as your clothes go into the machine.
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <!-- social -->
+                                    <div class="footer-social">
+                                        <a href="#"><i class="fab fa-twitter"></i></a>
+                                        <a href="https://bit.ly/sai4ull"><i class="fab fa-facebook-f"></i></a>
+                                        <a href="#"><i class="fab fa-pinterest-p"></i></a>
                                     </div>
                                 </div>
-                                <!-- social -->
-                                <div class="footer-social">
-                                    <a href="#"><i class="fab fa-twitter"></i></a>
-                                    <a href="https://bit.ly/sai4ull"><i class="fab fa-facebook-f"></i></a>
-                                    <a href="#"><i class="fab fa-pinterest-p"></i></a>
+                            </div>
+                        </div>
+                        <div class="col-xl-2 col-lg-3 col-md-4 col-sm-5">
+                            <div class="single-footer-caption mb-50">
+                                <div class="footer-tittle">
+                                    <h4>Our solutions</h4>
+                                    <ul>
+                                        <li><a href="#">Design & creatives</a></li>
+                                        <li><a href="#">Telecommunication</a></li>
+                                        <li><a href="#">Restaurant</a></li>
+                                        <li><a href="#">Programing</a></li>
+                                        <li><a href="#">Architecture</a></li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-xl-2 col-lg-3 col-md-4 col-sm-5">
-                        <div class="single-footer-caption mb-50">
-                            <div class="footer-tittle">
-                                <h4>Our solutions</h4>
-                                <ul>
-                                    <li><a href="#">Design & creatives</a></li>
-                                    <li><a href="#">Telecommunication</a></li>
-                                    <li><a href="#">Restaurant</a></li>
-                                    <li><a href="#">Programing</a></li>
-                                    <li><a href="#">Architecture</a></li>
-                                </ul>
+                        <div class="col-xl-2 col-lg-4 col-md-4 col-sm-6">
+                            <div class="single-footer-caption mb-50">
+                                <div class="footer-tittle">
+                                    <h4>Support</h4>
+                                    <ul>
+                                        <li><a href="#">Design & creatives</a></li>
+                                        <li><a href="#">Telecommunication</a></li>
+                                        <li><a href="#">Restaurant</a></li>
+                                        <li><a href="#">Programing</a></li>
+                                        <li><a href="#">Architecture</a></li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-xl-2 col-lg-4 col-md-4 col-sm-6">
-                        <div class="single-footer-caption mb-50">
-                            <div class="footer-tittle">
-                                <h4>Support</h4>
-                                <ul>
-                                    <li><a href="#">Design & creatives</a></li>
-                                    <li><a href="#">Telecommunication</a></li>
-                                    <li><a href="#">Restaurant</a></li>
-                                    <li><a href="#">Programing</a></li>
-                                    <li><a href="#">Architecture</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6">
-                        <div class="single-footer-caption mb-50">
-                            <div class="footer-tittle">
-                                <h4>Company</h4>
-                                <ul>
-                                    <li><a href="#">Design & creatives</a></li>
-                                    <li><a href="#">Telecommunication</a></li>
-                                    <li><a href="#">Restaurant</a></li>
-                                    <li><a href="#">Programing</a></li>
-                                    <li><a href="#">Architecture</a></li>
-                                </ul>
+                        <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6">
+                            <div class="single-footer-caption mb-50">
+                                <div class="footer-tittle">
+                                    <h4>Company</h4>
+                                    <ul>
+                                        <li><a href="#">Design & creatives</a></li>
+                                        <li><a href="#">Telecommunication</a></li>
+                                        <li><a href="#">Restaurant</a></li>
+                                        <li><a href="#">Programing</a></li>
+                                        <li><a href="#">Architecture</a></li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <!-- footer-bottom area -->
+            <div class="footer-bottom-area">
+                <div class="container">
+                    <div class="footer-border">
+                        <div class="row d-flex align-items-center">
+                            <div class="col-xl-12 ">
+                                <div class="footer-copy-right text-center">
+                                    <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                                        Copyright &copy;
+                                        <script>
+                                            document.write(new Date().getFullYear());
+                                        </script> All rights reserved | develope<i class="fa fa-heart"
+                                            aria-hidden="true"></i> by <a href="https://colorlib.com"
+                                            target="_blank">==</a>
+                                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Footer End-->
         </div>
-        <!-- footer-bottom area -->
-        <div class="footer-bottom-area">
-            <div class="container">
-                <div class="footer-border">
-                    <div class="row d-flex align-items-center">
-                        <div class="col-xl-12 ">
-                            <div class="footer-copy-right text-center">
-                                <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                                  Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | develope<i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">==</a>
-                                  <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-          </div>
-          <!-- Footer End-->
-      </div>
-  </footer> 
+    </footer>
 
     <div id="back-top">
         <a title="Go to Top" href="#">
@@ -261,6 +268,52 @@
         </a>
     </div>
 
+
+    <style>
+        .btn3.is-loading {
+            pointer-events: none;
+            opacity: .85;
+        }
+
+        .portal-spinner {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border: 2px solid rgba(255, 255, 255, .45);
+            border-top-color: #fff;
+            border-radius: 50%;
+            margin-right: 6px;
+            vertical-align: middle;
+            animation: portal-spin .6s linear infinite;
+        }
+
+        @keyframes portal-spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const portalBtn = document.getElementById('student-portal-btn');
+            const label = document.getElementById('student-portal-label');
+            if (!portalBtn) return;
+
+            portalBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                const destination = portalBtn.getAttribute('href');
+
+                portalBtn.classList.add('is-loading');
+                label.innerHTML = '<span class="portal-spinner"></span>Redirecting...';
+
+                // small delay so the state is actually visible before the page unloads
+                setTimeout(function() {
+                    window.location.href = destination;
+                }, 350);
+            });
+        });
+    </script>
     <!-- JS -->
 
     <script src="{{ asset('lipa-liberia-public-site/assets/js/vendor/modernizr-3.5.0.min.js') }}"></script>
