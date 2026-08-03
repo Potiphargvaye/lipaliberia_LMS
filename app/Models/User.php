@@ -8,6 +8,10 @@ use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
 use App\Notifications\SchoolResetPasswordNotification;
 
+use App\Models\Student;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+
+
 class User extends Authenticatable
 {
     use HasFactory, Notifiable, HasRoles;
@@ -96,5 +100,19 @@ class User extends Authenticatable
     public function createdUsers()
     {
         return $this->hasMany(User::class, 'created_by');
+    }
+
+
+    // Add this relationship method inside your existing App\Models\User class.
+// Do not replace the file — just add this method alongside your other
+// relationships/methods.
+
+    /**
+     * The Student profile linked to this account, if this user is a student.
+     * Staff/admin users will simply have this return null.
+     */
+    public function student(): HasOne
+    {
+        return $this->hasOne(Student::class);
     }
 }

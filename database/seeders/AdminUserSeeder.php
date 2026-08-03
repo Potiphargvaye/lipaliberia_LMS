@@ -39,7 +39,7 @@ class AdminUserSeeder extends Seeder
 
         );
 
-        // Prevent duplicate role assignments 
+        // Prevent duplicate role assignments   
         if (! $admin->hasRole('Super Admin')) {
             $admin->assignRole('Super Admin');
         }

@@ -9,6 +9,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use App\Services\RegistrationIdService;
 
 
 class RegisteredUserController extends Controller
@@ -76,42 +77,11 @@ class RegisteredUserController extends Controller
 |--------------------------------------------------------------------------
 | Generate Student Registration ID
 |--------------------------------------------------------------------------
+| Delegated to RegistrationIdService so Public Registration and Admin
+| Registration share one source of truth. Algorithm/format unchanged.
 */
 
-        $year = now()->year;
-
-        $lastStudent = User::role('Student')
-            ->orderByDesc('id')
-            ->first();
-
-        $nextNumber = 1;
-
-        if (
-            $lastStudent &&
-            preg_match('/(\d+)$/', $lastStudent->registration_id, $matches)
-        ) {
-            $nextNumber = (int) $matches[1] + 1;
-        }
-
-        /*
-|--------------------------------------------------------------------------
-| Ensure Registration ID is Always Unique
-|--------------------------------------------------------------------------
-*/
-
-        do {
-
-            $registrationId =
-                'LIPA/STU/' .
-                $year .
-                '/' .
-                str_pad($nextNumber, 4, '0', STR_PAD_LEFT);
-
-            $nextNumber++;
-        } while (
-            User::where('registration_id', $registrationId)->exists()
-        );
-
+        $registrationId = app(RegistrationIdService::class)->generate();
 
         $user = User::create([
 
@@ -136,7 +106,7 @@ class RegisteredUserController extends Controller
 
         /*
     |--------------------------------------------------------------------------
-    | Default public registration role
+    | Default public registration role  app/Http/Controllers/Auth/RegisteredUserController.php
     |--------------------------------------------------------------------------
     */
 

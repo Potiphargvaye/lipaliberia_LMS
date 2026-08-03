@@ -1,99 +1,124 @@
 <?php
 
-
 namespace App\Http\Controllers\Students;
 
 use App\Http\Controllers\Controller;
-
-
-
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use App\Models\Announcement;
-use App\Models\TeacherMaterial;
+use App\Models\Student;
+use Illuminate\View\View;
 
 class StudentDashboardController extends Controller
 {
     /**
-     * Show the student dashboard
+     * Student Dashboard
+     *
+     * Pulls everything from the Student -> Applications -> Enrollments
+     * relationships already defined on the Student model. No new
+     * business logic is introduced here — status transitions, progress,
+     * and certificate rules all continue to live on Application and
+     * Enrollment as before.
      */
-    public function index()
+    public function index(): View
     {
-        $user = Auth::user()->load('grade');
-        
-        $announcements = Announcement::where(function($query) {
-                $query->where('end_date', '>=', now())
-                      ->orWhereNull('end_date');
-            })
-            ->orderBy('created_at', 'desc')
+        $student = Student::with('user')
+            ->where('user_id', auth()->id())
+            ->firstOrFail();
+
+        $applications = $student->applications()
+            ->with(['course', 'intake'])
+            ->latest()
             ->get();
-        
-        return view('student.dashboard', compact('user', 'announcements'));
-    }
 
-    /**
-     * Show the student materials page
-     */
-    public function materials(Request $request)
-{
-    $user = Auth::user()->load('grade');
-    
-    $search = $request->input('search');
-    $type = $request->input('type');
-    
-    // Get the student's grade
-    $studentGrade = $user->grade;
-    
-    $materialsQuery = TeacherMaterial::with('grade')
-        ->where('is_published', true);
+        $enrollments = $student->enrollments()
+            ->with(['course', 'intake'])
+            ->latest()
+            ->get();
 
-    // Apply grade filter if student has a grade
-    if ($studentGrade) {
-        $materialsQuery->where('grade_id', $studentGrade->id);
-    }
+        // Reuse the existing accessors on Student rather than re-deriving
+        // this logic here.
+        $latestApplication = $student->latestApplication();
+        $activeEnrollment = $student->activeEnrollment();
 
-    // Apply search filter
-    if ($search) {
-        $materialsQuery->where(function($query) use ($search) {
-            $query->where('title', 'like', "%{$search}%")
-                  ->orWhere('description', 'like', "%{$search}%");
-        });
-    }
+        $completedEnrollment = $enrollments->firstWhere('status', 'completed');
 
-    // Apply type filter
-    if ($type) {
-        $materialsQuery->where('type', $type);
-    }
+        $latestCertificate = $enrollments->first(
+            fn($enrollment) => $enrollment->certificate_issued && $enrollment->certificate_path
+        );
 
-    $materials = $materialsQuery->orderBy('created_at', 'desc')
-        ->paginate(9);
+        $stats = [
+            'applications' => $applications->count(),
+            'active_enrollments' => $enrollments->whereIn('status', ['enrolled', 'in_training'])->count(),
+            'completed_courses' => $enrollments->where('status', 'completed')->count(),
+            'certificates' => $enrollments->where('certificate_issued', true)->count(),
+        ];
 
-    if ($request->ajax() || $request->wantsJson()) {
-        $materialsArray = [];
-        foreach ($materials->items() as $material) {
-            $materialsArray[] = [
-                'id' => $material->id,
-                'title' => $material->title,
-                'description' => $material->description,
-                'type' => $material->type,
-                'due_date' => $material->due_date ? $material->due_date->format('M d, Y') : null,
-                'max_score' => $material->max_score,
-                'file_path' => $material->file_path ? asset('storage/' . $material->file_path) : null,
-                'created_at' => $material->created_at->diffForHumans(),
-                'grade' => [
-                    'level' => $material->grade->level,
-                    'section' => $material->grade->section
-                ]
-            ];
+        // Recent Activity — built purely from timestamps already on
+        // Application/Enrollment (created_at, reviewed_at, completed_at,
+        // withdrawn_at). No new activity_log table yet, per the
+        // architecture doc's "Future Scalability" note.
+        $activity = collect();
+
+        foreach ($applications as $application) {
+            $activity->push([
+                'icon' => 'bi-file-earmark-plus',
+                'variant' => 'info',
+                'title' => 'Application submitted',
+                'description' => $application->course->title ?? 'Course',
+                'date' => $application->created_at,
+            ]);
+
+            if ($application->reviewed_at) {
+                $activity->push([
+                    'icon' => $application->status === 'approved' ? 'bi-check-circle' : 'bi-x-circle',
+                    'variant' => $application->status === 'approved' ? 'success' : 'danger',
+                    'title' => 'Application ' . ucfirst($application->status),
+                    'description' => $application->course->title ?? 'Course',
+                    'date' => $application->reviewed_at,
+                ]);
+            }
         }
 
-        return response()->json([
-            'materials' => $materialsArray,
-            'total' => $materials->total(),
-            'pagination' => $materials->hasPages() ? $materials->links()->toHtml() : ''
-        ]);
-    }
+        foreach ($enrollments as $enrollment) {
+            $activity->push([
+                'icon' => 'bi-mortarboard',
+                'variant' => 'primary',
+                'title' => 'Enrolled in course',
+                'description' => $enrollment->course->title ?? 'Course',
+                'date' => $enrollment->created_at,
+            ]);
 
-    return view('student.materials', compact('user', 'materials'));
-}
+            if ($enrollment->completed_at) {
+                $activity->push([
+                    'icon' => 'bi-award',
+                    'variant' => 'success',
+                    'title' => 'Course completed',
+                    'description' => $enrollment->course->title ?? 'Course',
+                    'date' => $enrollment->completed_at,
+                ]);
+            }
+
+            if ($enrollment->withdrawn_at) {
+                $activity->push([
+                    'icon' => 'bi-dash-circle',
+                    'variant' => 'warning',
+                    'title' => 'Enrollment withdrawn',
+                    'description' => $enrollment->course->title ?? 'Course',
+                    'date' => $enrollment->withdrawn_at,
+                ]);
+            }
+        }
+
+        $activity = $activity->sortByDesc('date')->take(6)->values();
+
+        return view('student.dashboard', compact(
+            'student',
+            'applications',
+            'enrollments',
+            'latestApplication',
+            'activeEnrollment',
+            'completedEnrollment',
+            'latestCertificate',
+            'stats',
+            'activity'
+        ));
+    }
 }

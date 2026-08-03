@@ -7,160 +7,164 @@ use Spatie\Permission\Models\Permission;
 
 class PermissionSeeder extends Seeder
 {
-    public function run(): void
-    {
-        $permissions = [
+        public function run(): void
+        {
+                $permissions = [
 
-            /*
+                        /*
     |--------------------------------------------------------------------------
     | Dashboard
     |--------------------------------------------------------------------------
     */
 
-            'view dashboard',
+                        'view dashboard',
 
-            /*
+                        /*
     |--------------------------------------------------------------------------
     | Users
     |--------------------------------------------------------------------------
     */
 
-            'view users',
-            'create users',
-            'edit users',
-            'delete users',
+                        'view users',
+                        'create users',
+                        'edit users',
+                        'delete users',
 
-            /*
+                        /*
     |--------------------------------------------------------------------------
     | Roles
-    |--------------------------------------------------------------------------
+    |---------------------------------  -----------------------------------------
     */
 
-            'view roles',
-            'create roles',
-            'edit roles',
-            'delete roles',
-            'manage roles',
+                        'view roles',
+                        'create roles',
+                        'edit roles',
+                        'delete roles',
+                        'manage roles',
 
-            /*
+                        /*
     |--------------------------------------------------------------------------
     | Permissions
     |--------------------------------------------------------------------------
     */
 
-            'view permissions',
-            'create permissions',
-            'edit permissions',
-            'delete permissions',
-            'manage permissions',
+                        'view permissions',
+                        'create permissions',
+                        'edit permissions',
+                        'delete permissions',
+                        'manage permissions',
 
-            /*
+                        /*
     |--------------------------------------------------------------------------
     | Students
     |--------------------------------------------------------------------------
     */
 
-            'view students',
-            'create students',
-            'edit students',
-            'delete students',
+                        'view students',
+                        'create students',
+                        'edit students',
+                        'delete students',
 
-            /*
+                        'review applications',      // new
+                        'approve applications',     // new
+                        'manage enrollments',       // new
+                        'view own student profile', //
+                        /*
     |--------------------------------------------------------------------------
     | Courses
     |--------------------------------------------------------------------------
     */
 
-            'view courses',
-            'create courses',
-            'edit courses',
-            'delete courses',
+                        'view courses',
+                        'create courses',
+                        'edit courses',
+                        'delete courses',
 
-            /*
+                        /*
     |--------------------------------------------------------------------------
     | Categories
     |--------------------------------------------------------------------------
     */
 
-            'manage categories',
+                        'manage categories',
 
-            /*
+                        /*
     |--------------------------------------------------------------------------
     | Lessons
     |--------------------------------------------------------------------------
     */
 
-            'view lessons',
-            'create lessons',
-            'edit lessons',
-            'delete lessons',
+                        'view lessons',
+                        'create lessons',
+                        'edit lessons',
+                        'delete lessons',
 
-            /*
+                        /*
     |--------------------------------------------------------------------------
     | Enrollments
     |--------------------------------------------------------------------------
     */
 
-            'view enrollments',
-            'approve enrollments',
-            'reject enrollments',
+                        'view enrollments',
+                        'approve enrollments',
+                        'reject enrollments',
 
-            /*
+                        /*
     |--------------------------------------------------------------------------
     | Assignments
     |--------------------------------------------------------------------------
     */
 
-            'create assignments',
-            'grade assignments',
+                        'create assignments',
+                        'grade assignments',
 
-            /*
+                        /*
     |--------------------------------------------------------------------------
     | Quizzes
     |--------------------------------------------------------------------------
     */
 
-            'create quizzes',
-            'manage quizzes',
+                        'create quizzes',
+                        'manage quizzes',
 
-            /*
+                        /*
     |--------------------------------------------------------------------------
     | Certificates
     |--------------------------------------------------------------------------
     */
 
-            'issue certificates',
+                        'issue certificates',
 
-            /*
+                        /*
     |--------------------------------------------------------------------------
     | Announcements
     |--------------------------------------------------------------------------
     */
 
-            'manage announcements',
+                        'manage announcements',
 
-            /*
+                        /*
     |--------------------------------------------------------------------------
     | Reports
     |--------------------------------------------------------------------------
     */
 
-            'view reports',
+                        'view reports',
 
-            /*
+                        /*
     |--------------------------------------------------------------------------
     | Settings
     |--------------------------------------------------------------------------
     */
 
-            'manage settings',
-        ];
+                        'manage settings',
+                ];
 
-        foreach ($permissions as $permission) {
-            Permission::firstOrCreate([
-                'name' => $permission,
-                'guard_name' => 'web',
-            ]);
+                foreach ($permissions as $permission) {
+                        Permission::firstOrCreate([
+                                'name' => $permission,
+                                'guard_name' => 'web',
+                        ]);
+                }
         }
-    }
 }

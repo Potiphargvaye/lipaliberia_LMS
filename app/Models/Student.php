@@ -1,66 +1,110 @@
-<?php 
+<?php
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Student extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'student_id',
-        'image',
+        'user_id',
         'name',
-        'age',
         'gender',
-        'parent_phone',
-        'transcript',
-        'recommendation_letter',
-        'class_applying_for',
-        'date_of_admission',  
-        'status', // ✅ added
-        'status',
-        'shift',
-        'intake',
-        'grade_id',
-        'subjects',
-          'last_school_attended',
-          'student_type'
-
+        'date_of_birth',
+        'nationality',
+        'county_of_residence',
+        'home_address',
+        'mobile_number',
+        'whatsapp_number',
+        'employment_status',
+        'employer_name',
+        'position_title',
+        'institution_contact_detail',
+        'institution_contact_info',
+        'years_experience',
+        'highest_qualification',
+        'institution_attended',
+        'field_of_study',
+        'year_completed',
+        'passport_photo_path',
+        'academic_certificate_path',
+        'emergency_contact_name',
+        'emergency_contact_phone',
+        'emergency_contact_relationship',
+        'requires_special_accommodation',
+        'special_accommodation_details',
     ];
 
-    protected $casts = [ 
-        'date_of_admission' => 'date',
-        'created_at' => 'datetime',  
-        'updated_at' => 'datetime',
-        'subjects' => 'array',
-        'grade_id' => 'integer',
+    protected $casts = [
+        'date_of_birth' => 'date',
+        'requires_special_accommodation' => 'boolean',
+        'years_experience' => 'integer',
+        'year_completed' => 'integer',
     ];
 
-    public function grade()
-{
-    return $this->belongsTo(Grade::class, 'grade_id');
-}
+    /*
+    |--------------------------------------------------------------------------
+    | Relationships
+    |--------------------------------------------------------------------------
+    */
 
-public function assignSubjects(array $subjects)
-{
-    $this->update(['subjects' => $subjects]);
-}
-
-
-    protected static function boot()
+    /**
+     * The login account this Student profile belongs to.
+     * The Student ID shown in the UI is $student->user->registration_id —
+     * there is no separate student_id column on this table.
+     */
+    public function user(): BelongsTo
     {
-        parent::boot();
+        return $this->belongsTo(User::class);
+    }
 
-        static::creating(function ($student) {
-            $latestStudent = static::latest('id')->first();
-            $nextId = $latestStudent ? $latestStudent->id + 1 : 1;
-            $student->student_id = 'EDMOL' . str_pad($nextId, 4, '0', STR_PAD_LEFT) . '/' . date('Y');
+    /**
+     * Every Application this student has ever submitted, across all
+     * courses/intakes over time.
+     */
+    public function applications(): HasMany
+    {
+        return $this->hasMany(Application::class);
+    }
 
-            // ✅ ensure default status
-            $student->status = $student->status ?? 'candidate';
-        });
+    /**
+     * Every Enrollment this student has ever had (one per approved
+     * Application).
+     */
+    public function enrollments(): HasMany
+    {
+        return $this->hasMany(Enrollment::class);
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Convenience accessors
+    |--------------------------------------------------------------------------
+    */
+
+    /**
+     * The most recent Application, used to drive the student dashboard's
+     * status card (pending / approved / etc).
+     */
+    public function latestApplication()
+    {
+        return $this->applications()->latest()->first();
+    }
+
+    /**
+     * The most recent active Enrollment (if any), used to drive the
+     * dashboard's "continue training" / certificate card.
+     */
+    public function activeEnrollment()
+    {
+        return $this->enrollments()
+            ->whereIn('status', ['enrolled', 'in_training'])
+            ->latest()
+            ->first();
     }
 }

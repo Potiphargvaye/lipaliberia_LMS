@@ -36,6 +36,9 @@ require __DIR__ . '/admin/permissions.php';
 require __DIR__ . '/admin/role-permissions.php';
 require __DIR__ . '/admin/users.php';
 require __DIR__ . '/admin/dashboard.php';
+require __DIR__ . '/admin/students.php';
+require __DIR__ . '/admin/admissions.php';
+require __DIR__ . '/admin/enrollments.php';
 
 
 
@@ -127,49 +130,8 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
 
 
 
-Route::prefix('teacher')->middleware(['auth', 'role:teacher'])->group(function () {
-    // This will create routes with names like: teacher.materials.store
-    Route::resource('materials', TeacherMaterialController::class)
-        ->names('teacher.materials');
-
-    Route::post('materials/{material}/toggle-publish', [TeacherMaterialController::class, 'togglePublish'])
-        ->name('teacher.materials.toggle-publish');
-
-    // Remove the duplicate '/teacher/' from the path
-    Route::get('materials/create', [TeacherMaterialController::class, 'create'])->name('teacher.materials.create');
-});
-
-
-
 // routes/web.php 
 
-
-Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () {
-    // Student Management Routes
-    // ✅ Students page — route-level permission protection
-    Route::get('/students', [StudentController::class, 'index'])
-        ->name('students.index')
-        ->middleware('permission:view students'); // <- safe permission check
-    Route::get('/students/create', [StudentController::class, 'create'])->name('students.create');
-    Route::post('/students', [StudentController::class, 'store'])->name('students.store');
-
-    Route::get('/students/{student}', [StudentController::class, 'show'])
-        ->middleware('permission:view student details')
-        ->name('students.show');
-
-    Route::get('/students/{student}/edit', [StudentController::class, 'edit'])
-        ->middleware('permission:edit students')
-        ->name('students.edit');
-
-    Route::put('/students/{student}', [StudentController::class, 'update'])->name('students.update');
-
-    Route::delete('/students/{student}', [StudentController::class, 'destroy'])
-        ->middleware('permission:delete students')
-        ->name('students.destroy');
-
-    // Alternative: You can use resource route instead (generates all above routes)
-    // Route::resource('students', StudentController::class);
-});
 
 
 
