@@ -102,7 +102,7 @@
                             </td>
 
                             <td class="px-6 py-4 text-sm text-slate-600">
-                                {{ $application->intake?->name }}
+                                {{ $application->cohort?->name }}
                             </td>
 
                             <td class="px-6 py-4 text-center text-sm text-slate-500">

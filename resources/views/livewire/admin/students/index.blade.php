@@ -64,8 +64,14 @@
                     @forelse($students as $student)
                         <tr wire:key="student-{{ $student->id }}" class="hover:bg-sky-50/60 transition-colors">
 
-                            <td class="px-6 py-4 text-sm font-mono text-slate-600">
-                                {{ $student->user?->registration_id ?? '—' }}
+                            <td class="px-6 py-4 text-sm font-mono">
+                                @if ($student->enrollments->count() > 0)
+                                    {{ $student->user?->registration_id }}
+                                @else
+                                    <span class="text-amber-600 font-bold italic">
+                                        Pending Enrollment
+                                    </span>
+                                @endif
                             </td>
 
                             <td class="px-6 py-4 font-semibold text-slate-800">

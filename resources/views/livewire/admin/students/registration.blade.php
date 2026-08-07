@@ -25,7 +25,7 @@
 
     {{-- Stepper --}}
     <div class="bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl p-4 sm:p-5 overflow-x-auto">
-        <div class="flex items-center min-w-[860px]">
+        <div class="flex items-center min-w-[560px] sm:min-w-0">
             @foreach ($stepLabels as $step => $label)
                 <button type="button" wire:click="goToStep({{ $step }})" @disabled($step >= $currentStep)
                     class="flex flex-col items-center gap-1.5 flex-1 {{ $step < $currentStep ? 'cursor-pointer' : 'cursor-default' }}">
@@ -41,7 +41,7 @@
                         @endif
                     </div>
                     <span
-                        class="text-[11px] font-semibold text-center leading-tight
+                        class="text-[10px] sm:text-[11px] font-semibold text-center leading-tight px-0.5
                             {{ $step === $currentStep ? 'text-[#155E8A]' : 'text-slate-400' }}">
                         {{ $label }}
                     </span>
@@ -57,7 +57,7 @@
 
     <form wire:submit.prevent="{{ $currentStep === $totalSteps ? 'submit' : 'nextStep' }}" class="space-y-6">
 
-        {{-- Section A — Personal Information --}}
+        {{-- ============ Step 1 — Personal Information ============ --}}
         @if ($currentStep === 1)
             <div>
                 <div class="flex items-center gap-2 mb-5">
@@ -167,416 +167,441 @@
             </div>
         @endif
 
-        {{-- Section B — Employment --}}
+        {{-- ============ Step 2 — Employment & Education ============ --}}
         @if ($currentStep === 2)
-            <div>
-                <div class="flex items-center gap-2 mb-5">
-                    <span class="h-8 w-8 rounded-lg bg-sky-50 text-[#155E8A] flex items-center justify-center">
-                        <i class="fas fa-briefcase text-sm"></i>
-                    </span>
-                    <div>
-                        <h2 class="text-sm font-bold uppercase tracking-wide text-[#155E8A]">Section B — Employment</h2>
-                        <p class="text-xs text-slate-400">Current employment situation</p>
-                    </div>
-                </div>
+            <div class="space-y-6">
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div class="sm:col-span-2">
-                        <label class="block text-sm font-semibold text-slate-700 mb-1.5">
-                            Employment Status <span class="text-[#B91C1C]">*</span>
-                        </label>
-                        <select wire:model="employment_status"
-                            class="w-full rounded-lg border border-slate-300 bg-white px-3.5 py-2.5 text-sm text-slate-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#155E8A]/30 focus:border-[#155E8A] transition-shadow">
-                            <option value="">Select...</option>
-                            <option value="employed">Employed</option>
-                            <option value="self_employed">Self-Employed</option>
-                            <option value="unemployed">Unemployed</option>
-                            <option value="student">Student</option>
-                            <option value="other">Other</option>
-                        </select>
-                        @error('employment_status')
-                            <p class="text-xs text-[#B91C1C] mt-1 font-medium">{{ $message }}</p>
-                        @enderror
-                    </div>
-
-                    <div>
-                        <label class="block text-sm font-semibold text-slate-700 mb-1.5">Employer Name</label>
-                        <input type="text" wire:model="employer_name"
-                            class="w-full rounded-lg border border-slate-300 bg-white px-3.5 py-2.5 text-sm text-slate-700 placeholder-slate-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#155E8A]/30 focus:border-[#155E8A] transition-shadow">
-                    </div>
-
-                    <div>
-                        <label class="block text-sm font-semibold text-slate-700 mb-1.5">Position / Title</label>
-                        <input type="text" wire:model="position_title"
-                            class="w-full rounded-lg border border-slate-300 bg-white px-3.5 py-2.5 text-sm text-slate-700 placeholder-slate-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#155E8A]/30 focus:border-[#155E8A] transition-shadow">
-                    </div>
-
-                    <div>
-                        <label class="block text-sm font-semibold text-slate-700 mb-1.5">Employer Contact
-                            Person</label>
-                        <input type="text" wire:model="institution_contact_detail"
-                            class="w-full rounded-lg border border-slate-300 bg-white px-3.5 py-2.5 text-sm text-slate-700 placeholder-slate-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#155E8A]/30 focus:border-[#155E8A] transition-shadow">
-                    </div>
-
-                    <div>
-                        <label class="block text-sm font-semibold text-slate-700 mb-1.5">Years of Experience</label>
-                        <input type="number" min="0" wire:model="years_experience"
-                            class="w-full rounded-lg border border-slate-300 bg-white px-3.5 py-2.5 text-sm text-slate-700 placeholder-slate-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#155E8A]/30 focus:border-[#155E8A] transition-shadow">
-                    </div>
-
-                    <div class="sm:col-span-2">
-                        <label class="block text-sm font-semibold text-slate-700 mb-1.5">Employer Contact Info
-                            <span class="text-slate-400 font-normal">(phone/email/address)</span></label>
-                        <textarea wire:model="institution_contact_info" rows="2"
-                            class="w-full rounded-lg border border-slate-300 bg-white px-3.5 py-2.5 text-sm text-slate-700 placeholder-slate-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#155E8A]/30 focus:border-[#155E8A] transition-shadow"></textarea>
-                    </div>
-                </div>
-            </div>
-        @endif
-
-        {{-- Section C — Education --}}
-        @if ($currentStep === 3)
-            <div>
-                <div class="flex items-center gap-2 mb-5">
-                    <span class="h-8 w-8 rounded-lg bg-sky-50 text-[#155E8A] flex items-center justify-center">
-                        <i class="fas fa-graduation-cap text-sm"></i>
-                    </span>
-                    <div>
-                        <h2 class="text-sm font-bold uppercase tracking-wide text-[#155E8A]">Section C — Education</h2>
-                        <p class="text-xs text-slate-400">Academic background</p>
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-sm font-semibold text-slate-700 mb-1.5">
-                            Highest Qualification <span class="text-[#B91C1C]">*</span>
-                        </label>
-                        <select wire:model="highest_qualification"
-                            class="w-full rounded-lg border border-slate-300 bg-white px-3.5 py-2.5 text-sm text-slate-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#155E8A]/30 focus:border-[#155E8A] transition-shadow">
-                            <option value="">Select...</option>
-                            <option value="certificate">Certificate</option>
-                            <option value="diploma">Diploma</option>
-                            <option value="bachelor">Bachelor's Degree</option>
-                            <option value="master">Master's Degree</option>
-                            <option value="doctorate">Doctorate</option>
-                            <option value="other">Other</option>
-                        </select>
-                        @error('highest_qualification')
-                            <p class="text-xs text-[#B91C1C] mt-1 font-medium">{{ $message }}</p>
-                        @enderror
-                    </div>
-
-                    <div>
-                        <label class="block text-sm font-semibold text-slate-700 mb-1.5">Year Completed</label>
-                        <input type="number" wire:model="year_completed"
-                            class="w-full rounded-lg border border-slate-300 bg-white px-3.5 py-2.5 text-sm text-slate-700 placeholder-slate-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#155E8A]/30 focus:border-[#155E8A] transition-shadow">
-                        @error('year_completed')
-                            <p class="text-xs text-[#B91C1C] mt-1 font-medium">{{ $message }}</p>
-                        @enderror
-                    </div>
-
-                    <div>
-                        <label class="block text-sm font-semibold text-slate-700 mb-1.5">Institution Attended</label>
-                        <input type="text" wire:model="institution_attended"
-                            class="w-full rounded-lg border border-slate-300 bg-white px-3.5 py-2.5 text-sm text-slate-700 placeholder-slate-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#155E8A]/30 focus:border-[#155E8A] transition-shadow">
-                    </div>
-
-                    <div>
-                        <label class="block text-sm font-semibold text-slate-700 mb-1.5">Field of Study</label>
-                        <input type="text" wire:model="field_of_study"
-                            class="w-full rounded-lg border border-slate-300 bg-white px-3.5 py-2.5 text-sm text-slate-700 placeholder-slate-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#155E8A]/30 focus:border-[#155E8A] transition-shadow">
-                    </div>
-                </div>
-            </div>
-        @endif
-
-        {{-- Section D — Documents --}}
-        @if ($currentStep === 4)
-            <div>
-                <div class="flex items-center gap-2 mb-5">
-                    <span class="h-8 w-8 rounded-lg bg-sky-50 text-[#155E8A] flex items-center justify-center">
-                        <i class="fas fa-file-upload text-sm"></i>
-                    </span>
-                    <div>
-                        <h2 class="text-sm font-bold uppercase tracking-wide text-[#155E8A]">Section D — Documents</h2>
-                        <p class="text-xs text-slate-400">Photo and academic records</p>
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div class="bg-[#F8FAFC] border border-[#E2E8F0] rounded-lg p-4">
-                        <label class="block text-sm font-semibold text-slate-700 mb-2">Passport Photo</label>
-                        <input type="file" wire:model="passport_photo" accept="image/*"
-                            class="w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-sky-100 file:text-[#155E8A] file:font-semibold file:text-xs hover:file:bg-sky-200 file:cursor-pointer cursor-pointer">
-                        <div wire:loading wire:target="passport_photo"
-                            class="text-xs text-[#155E8A] mt-2 flex items-center gap-1">
-                            <i class="fas fa-circle-notch fa-spin"></i> Uploading...
+                <div>
+                    <div class="flex items-center gap-2 mb-5">
+                        <span class="h-8 w-8 rounded-lg bg-sky-50 text-[#155E8A] flex items-center justify-center">
+                            <i class="fas fa-briefcase text-sm"></i>
+                        </span>
+                        <div>
+                            <h2 class="text-sm font-bold uppercase tracking-wide text-[#155E8A]">Section B —
+                                Employment</h2>
+                            <p class="text-xs text-slate-400">Current employment situation</p>
                         </div>
-                        @if ($passport_photo)
-                            <img src="{{ $passport_photo->temporaryUrl() }}"
-                                class="mt-3 h-20 w-20 rounded-lg object-cover ring-2 ring-white shadow-sm">
-                        @endif
-                        @error('passport_photo')
-                            <p class="text-xs text-[#B91C1C] mt-1 font-medium">{{ $message }}</p>
-                        @enderror
                     </div>
 
-                    <div class="bg-[#F8FAFC] border border-[#E2E8F0] rounded-lg p-4">
-                        <label class="block text-sm font-semibold text-slate-700 mb-2">Academic Certificate
-                            <span class="text-slate-400 font-normal">(PDF or image)</span></label>
-                        <input type="file" wire:model="academic_certificate" accept=".pdf,.jpg,.jpeg,.png"
-                            class="w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-sky-100 file:text-[#155E8A] file:font-semibold file:text-xs hover:file:bg-sky-200 file:cursor-pointer cursor-pointer">
-                        <div wire:loading wire:target="academic_certificate"
-                            class="text-xs text-[#155E8A] mt-2 flex items-center gap-1">
-                            <i class="fas fa-circle-notch fa-spin"></i> Uploading...
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="sm:col-span-2">
+                            <label class="block text-sm font-semibold text-slate-700 mb-1.5">
+                                Employment Status <span class="text-[#B91C1C]">*</span>
+                            </label>
+                            <select wire:model="employment_status"
+                                class="w-full rounded-lg border border-slate-300 bg-white px-3.5 py-2.5 text-sm text-slate-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#155E8A]/30 focus:border-[#155E8A] transition-shadow">
+                                <option value="">Select...</option>
+                                <option value="employed">Employed</option>
+                                <option value="self_employed">Self-Employed</option>
+                                <option value="unemployed">Unemployed</option>
+                                <option value="student">Student</option>
+                                <option value="other">Other</option>
+                            </select>
+                            @error('employment_status')
+                                <p class="text-xs text-[#B91C1C] mt-1 font-medium">{{ $message }}</p>
+                            @enderror
                         </div>
-                        @if ($academic_certificate)
-                            <p
-                                class="text-xs text-slate-600 mt-3 flex items-center gap-1.5 bg-white rounded-lg px-3 py-2 border border-[#E2E8F0]">
-                                <i class="fas fa-file-lines text-[#155E8A]"></i>
-                                {{ $academic_certificate->getClientOriginalName() }}
-                            </p>
-                        @endif
-                        @error('academic_certificate')
-                            <p class="text-xs text-[#B91C1C] mt-1 font-medium">{{ $message }}</p>
-                        @enderror
+
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-1.5">Employer Name</label>
+                            <input type="text" wire:model="employer_name"
+                                class="w-full rounded-lg border border-slate-300 bg-white px-3.5 py-2.5 text-sm text-slate-700 placeholder-slate-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#155E8A]/30 focus:border-[#155E8A] transition-shadow">
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-1.5">Position / Title</label>
+                            <input type="text" wire:model="position_title"
+                                class="w-full rounded-lg border border-slate-300 bg-white px-3.5 py-2.5 text-sm text-slate-700 placeholder-slate-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#155E8A]/30 focus:border-[#155E8A] transition-shadow">
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-1.5">Employer Contact
+                                Person</label>
+                            <input type="text" wire:model="institution_contact_detail"
+                                class="w-full rounded-lg border border-slate-300 bg-white px-3.5 py-2.5 text-sm text-slate-700 placeholder-slate-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#155E8A]/30 focus:border-[#155E8A] transition-shadow">
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-1.5">Years of
+                                Experience</label>
+                            <input type="number" min="0" wire:model="years_experience"
+                                class="w-full rounded-lg border border-slate-300 bg-white px-3.5 py-2.5 text-sm text-slate-700 placeholder-slate-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#155E8A]/30 focus:border-[#155E8A] transition-shadow">
+                        </div>
+
+                        <div class="sm:col-span-2">
+                            <label class="block text-sm font-semibold text-slate-700 mb-1.5">Employer Contact Info
+                                <span class="text-slate-400 font-normal">(phone/email/address)</span></label>
+                            <textarea wire:model="institution_contact_info" rows="2"
+                                class="w-full rounded-lg border border-slate-300 bg-white px-3.5 py-2.5 text-sm text-slate-700 placeholder-slate-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#155E8A]/30 focus:border-[#155E8A] transition-shadow"></textarea>
+                        </div>
                     </div>
                 </div>
-            </div>
-        @endif
 
-        {{-- Section E — Course, Intake & Sponsorship --}}
-        @if ($currentStep === 5)
-            <div>
-                <div class="flex items-center gap-2 mb-5">
-                    <span class="h-8 w-8 rounded-lg bg-sky-50 text-[#155E8A] flex items-center justify-center">
-                        <i class="fas fa-book-open text-sm"></i>
-                    </span>
-                    <div>
-                        <h2 class="text-sm font-bold uppercase tracking-wide text-[#155E8A]">Section E — Course &
-                            Sponsorship</h2>
-                        <p class="text-xs text-slate-400">Which course, intake, and how it's funded</p>
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-sm font-semibold text-slate-700 mb-1.5">
-                            Course <span class="text-[#B91C1C]">*</span>
-                        </label>
-                        <select wire:model="course_id"
-                            class="w-full rounded-lg border border-slate-300 bg-white px-3.5 py-2.5 text-sm text-slate-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#155E8A]/30 focus:border-[#155E8A] transition-shadow">
-                            <option value="">Select a course...</option>
-                            @foreach ($courses as $course)
-                                <option value="{{ $course->id }}">{{ $course->title }}</option>
-                            @endforeach
-                        </select>
-                        @error('course_id')
-                            <p class="text-xs text-[#B91C1C] mt-1 font-medium">{{ $message }}</p>
-                        @enderror
+                <div class="pt-5 border-t border-[#E2E8F0]">
+                    <div class="flex items-center gap-2 mb-5">
+                        <span class="h-8 w-8 rounded-lg bg-sky-50 text-[#155E8A] flex items-center justify-center">
+                            <i class="fas fa-graduation-cap text-sm"></i>
+                        </span>
+                        <div>
+                            <h2 class="text-sm font-bold uppercase tracking-wide text-[#155E8A]">Section C —
+                                Education</h2>
+                            <p class="text-xs text-slate-400">Academic background</p>
+                        </div>
                     </div>
 
-                    <div>
-                        <label class="block text-sm font-semibold text-slate-700 mb-1.5">
-                            Intake <span class="text-[#B91C1C]">*</span>
-                        </label>
-                        <select wire:model="intake_id"
-                            class="w-full rounded-lg border border-slate-300 bg-white px-3.5 py-2.5 text-sm text-slate-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#155E8A]/30 focus:border-[#155E8A] transition-shadow">
-                            <option value="">Select a Cohort...</option>
-                            @foreach ($intakes as $intake)
-                                <option value="{{ $intake->id }}">{{ $intake->name }}</option>
-                            @endforeach
-                        </select>
-                        @error('intake_id')
-                            <p class="text-xs text-[#B91C1C] mt-1 font-medium">{{ $message }}</p>
-                        @enderror
-                    </div>
-
-                    <div class="sm:col-span-2">
-                        <label class="block text-sm font-semibold text-slate-700 mb-1.5">How did they hear about
-                            LIPA?</label>
-                        <input type="text" wire:model="how_heard_about_us"
-                            class="w-full rounded-lg border border-slate-300 bg-white px-3.5 py-2.5 text-sm text-slate-700 placeholder-slate-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#155E8A]/30 focus:border-[#155E8A] transition-shadow">
-                    </div>
-
-                    <div>
-                        <label class="block text-sm font-semibold text-slate-700 mb-1.5">
-                            Sponsorship Type <span class="text-[#B91C1C]">*</span>
-                        </label>
-                        <select wire:model.live="sponsorship_type"
-                            class="w-full rounded-lg border border-slate-300 bg-white px-3.5 py-2.5 text-sm text-slate-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#155E8A]/30 focus:border-[#155E8A] transition-shadow">
-                            <option value="">Select...</option>
-                            <option value="self">Self-Sponsored</option>
-                            <option value="employer">Employer-Sponsored</option>
-                            <option value="other">Other</option>
-                        </select>
-                        @error('sponsorship_type')
-                            <p class="text-xs text-[#B91C1C] mt-1 font-medium">{{ $message }}</p>
-                        @enderror
-                    </div>
-
-                    @if (in_array($sponsorship_type, ['employer', 'other']))
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
                             <label class="block text-sm font-semibold text-slate-700 mb-1.5">
-                                Sponsor Organization Name <span class="text-[#B91C1C]">*</span>
+                                Highest Qualification <span class="text-[#B91C1C]">*</span>
                             </label>
-                            <input type="text" wire:model="sponsor_organization_name"
+                            <select wire:model="highest_qualification"
+                                class="w-full rounded-lg border border-slate-300 bg-white px-3.5 py-2.5 text-sm text-slate-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#155E8A]/30 focus:border-[#155E8A] transition-shadow">
+                                <option value="">Select...</option>
+                                <option value="certificate">Certificate</option>
+                                <option value="diploma">Diploma</option>
+                                <option value="bachelor">Bachelor's Degree</option>
+                                <option value="master">Master's Degree</option>
+                                <option value="doctorate">Doctorate</option>
+                                <option value="other">Other</option>
+                            </select>
+                            @error('highest_qualification')
+                                <p class="text-xs text-[#B91C1C] mt-1 font-medium">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-1.5">Year Completed</label>
+                            <input type="number" wire:model="year_completed"
                                 class="w-full rounded-lg border border-slate-300 bg-white px-3.5 py-2.5 text-sm text-slate-700 placeholder-slate-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#155E8A]/30 focus:border-[#155E8A] transition-shadow">
-                            @error('sponsor_organization_name')
+                            @error('year_completed')
                                 <p class="text-xs text-[#B91C1C] mt-1 font-medium">{{ $message }}</p>
                             @enderror
                         </div>
-                    @endif
 
-                    <div
-                        class="sm:col-span-2 flex items-center gap-2.5 bg-[#F8FAFC] border border-[#E2E8F0] rounded-lg px-3.5 py-3">
-                        <input type="checkbox" wire:model="requires_invoice" id="requires_invoice"
-                            class="h-4 w-4 rounded border-slate-300 text-[#155E8A] focus:ring-[#155E8A]/30">
-                        <label for="requires_invoice" class="text-sm text-slate-700">Requires an invoice</label>
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-1.5">Institution
+                                Attended</label>
+                            <input type="text" wire:model="institution_attended"
+                                class="w-full rounded-lg border border-slate-300 bg-white px-3.5 py-2.5 text-sm text-slate-700 placeholder-slate-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#155E8A]/30 focus:border-[#155E8A] transition-shadow">
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-1.5">Field of Study</label>
+                            <input type="text" wire:model="field_of_study"
+                                class="w-full rounded-lg border border-slate-300 bg-white px-3.5 py-2.5 text-sm text-slate-700 placeholder-slate-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#155E8A]/30 focus:border-[#155E8A] transition-shadow">
+                        </div>
                     </div>
                 </div>
+
             </div>
         @endif
 
-        {{-- Section F — Emergency Contact --}}
-        @if ($currentStep === 6)
-            <div>
-                <div class="flex items-center gap-2 mb-5">
-                    <span class="h-8 w-8 rounded-lg bg-sky-50 text-[#155E8A] flex items-center justify-center">
-                        <i class="fas fa-phone-volume text-sm"></i>
-                    </span>
-                    <div>
-                        <h2 class="text-sm font-bold uppercase tracking-wide text-[#155E8A]">Section F — Emergency
-                            Contact</h2>
-                        <p class="text-xs text-slate-400">Who to reach in case of emergency</p>
+        {{-- ============ Step 3 — Documents & Course ============ --}}
+        @if ($currentStep === 3)
+            <div class="space-y-6">
+
+                <div>
+                    <div class="flex items-center gap-2 mb-5">
+                        <span class="h-8 w-8 rounded-lg bg-sky-50 text-[#155E8A] flex items-center justify-center">
+                            <i class="fas fa-file-upload text-sm"></i>
+                        </span>
+                        <div>
+                            <h2 class="text-sm font-bold uppercase tracking-wide text-[#155E8A]">Section D —
+                                Documents</h2>
+                            <p class="text-xs text-slate-400">Photo and academic records</p>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="bg-[#F8FAFC] border border-[#E2E8F0] rounded-lg p-4">
+                            <label class="block text-sm font-semibold text-slate-700 mb-2">Passport Photo</label>
+                            <input type="file" wire:model="passport_photo" accept="image/*"
+                                class="w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-sky-100 file:text-[#155E8A] file:font-semibold file:text-xs hover:file:bg-sky-200 file:cursor-pointer cursor-pointer">
+                            <div wire:loading wire:target="passport_photo"
+                                class="text-xs text-[#155E8A] mt-2 flex items-center gap-1">
+                                <i class="fas fa-circle-notch fa-spin"></i> Uploading...
+                            </div>
+                            @if ($passport_photo)
+                                <img src="{{ $passport_photo->temporaryUrl() }}"
+                                    class="mt-3 h-20 w-20 rounded-lg object-cover ring-2 ring-white shadow-sm">
+                            @endif
+                            @error('passport_photo')
+                                <p class="text-xs text-[#B91C1C] mt-1 font-medium">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        <div class="bg-[#F8FAFC] border border-[#E2E8F0] rounded-lg p-4">
+                            <label class="block text-sm font-semibold text-slate-700 mb-2">Academic Certificate
+                                <span class="text-slate-400 font-normal">(PDF or image)</span></label>
+                            <input type="file" wire:model="academic_certificate" accept=".pdf,.jpg,.jpeg,.png"
+                                class="w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-sky-100 file:text-[#155E8A] file:font-semibold file:text-xs hover:file:bg-sky-200 file:cursor-pointer cursor-pointer">
+                            <div wire:loading wire:target="academic_certificate"
+                                class="text-xs text-[#155E8A] mt-2 flex items-center gap-1">
+                                <i class="fas fa-circle-notch fa-spin"></i> Uploading...
+                            </div>
+                            @if ($academic_certificate)
+                                <p
+                                    class="text-xs text-slate-600 mt-3 flex items-center gap-1.5 bg-white rounded-lg px-3 py-2 border border-[#E2E8F0]">
+                                    <i class="fas fa-file-lines text-[#155E8A]"></i>
+                                    {{ $academic_certificate->getClientOriginalName() }}
+                                </p>
+                            @endif
+                            @error('academic_certificate')
+                                <p class="text-xs text-[#B91C1C] mt-1 font-medium">{{ $message }}</p>
+                            @enderror
+                        </div>
                     </div>
                 </div>
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-sm font-semibold text-slate-700 mb-1.5">
-                            Emergency Contact Name <span class="text-[#B91C1C]">*</span>
-                        </label>
-                        <input type="text" wire:model="emergency_contact_name"
-                            class="w-full rounded-lg border border-slate-300 bg-white px-3.5 py-2.5 text-sm text-slate-700 placeholder-slate-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#155E8A]/30 focus:border-[#155E8A] transition-shadow">
-                        @error('emergency_contact_name')
-                            <p class="text-xs text-[#B91C1C] mt-1 font-medium">{{ $message }}</p>
-                        @enderror
+                <div class="pt-5 border-t border-[#E2E8F0]">
+                    <div class="flex items-center gap-2 mb-5">
+                        <span class="h-8 w-8 rounded-lg bg-sky-50 text-[#155E8A] flex items-center justify-center">
+                            <i class="fas fa-book-open text-sm"></i>
+                        </span>
+                        <div>
+                            <h2 class="text-sm font-bold uppercase tracking-wide text-[#155E8A]">Section E — Course &
+                                Sponsorship</h2>
+                            <p class="text-xs text-slate-400">Which course, cohort, and how it's funded</p>
+                        </div>
                     </div>
 
-                    <div>
-                        <label class="block text-sm font-semibold text-slate-700 mb-1.5">
-                            Emergency Contact Phone <span class="text-[#B91C1C]">*</span>
-                        </label>
-                        <input type="text" wire:model="emergency_contact_phone"
-                            class="w-full rounded-lg border border-slate-300 bg-white px-3.5 py-2.5 text-sm text-slate-700 placeholder-slate-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#155E8A]/30 focus:border-[#155E8A] transition-shadow">
-                        @error('emergency_contact_phone')
-                            <p class="text-xs text-[#B91C1C] mt-1 font-medium">{{ $message }}</p>
-                        @enderror
-                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-1.5">
+                                Course <span class="text-[#B91C1C]">*</span>
+                            </label>
+                            <select wire:model="course_id"
+                                class="w-full rounded-lg border border-slate-300 bg-white px-3.5 py-2.5 text-sm text-slate-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#155E8A]/30 focus:border-[#155E8A] transition-shadow">
+                                <option value="">Select a course...</option>
+                                @foreach ($courses as $course)
+                                    <option value="{{ $course->id }}">{{ $course->title }}</option>
+                                @endforeach
+                            </select>
+                            @error('course_id')
+                                <p class="text-xs text-[#B91C1C] mt-1 font-medium">{{ $message }}</p>
+                            @enderror
+                        </div>
 
-                    <div>
-                        <label class="block text-sm font-semibold text-slate-700 mb-1.5">
-                            Relationship <span class="text-[#B91C1C]">*</span>
-                        </label>
-                        <input type="text" wire:model="emergency_contact_relationship"
-                            class="w-full rounded-lg border border-slate-300 bg-white px-3.5 py-2.5 text-sm text-slate-700 placeholder-slate-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#155E8A]/30 focus:border-[#155E8A] transition-shadow">
-                        @error('emergency_contact_relationship')
-                            <p class="text-xs text-[#B91C1C] mt-1 font-medium">{{ $message }}</p>
-                        @enderror
-                    </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-1.5">
+                                Cohort <span class="text-[#B91C1C]">*</span>
+                            </label>
+                            <select wire:model="cohort_id"
+                                class="w-full rounded-lg border border-slate-300 bg-white px-3.5 py-2.5 text-sm text-slate-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#155E8A]/30 focus:border-[#155E8A] transition-shadow">
+                                <option value="">Select a Cohort...</option>
+                                @foreach ($cohorts as $cohort)
+                                    <option value="{{ $cohort->id }}">{{ $cohort->name }}</option>
+                                @endforeach
+                            </select>
+                            @error('cohort_id')
+                                <p class="text-xs text-[#B91C1C] mt-1 font-medium">{{ $message }}</p>
+                            @enderror
+                        </div>
 
-                    <div
-                        class="sm:col-span-2 flex items-center gap-2.5 bg-[#F8FAFC] border border-[#E2E8F0] rounded-lg px-3.5 py-3">
-                        <input type="checkbox" wire:model.live="requires_special_accommodation"
-                            id="requires_accommodation"
-                            class="h-4 w-4 rounded border-slate-300 text-[#155E8A] focus:ring-[#155E8A]/30">
-                        <label for="requires_accommodation" class="text-sm text-slate-700">Requires special
-                            accommodation</label>
-                    </div>
-
-                    @if ($requires_special_accommodation)
                         <div class="sm:col-span-2">
-                            <label class="block text-sm font-semibold text-slate-700 mb-1.5">Accommodation
-                                Details</label>
-                            <textarea wire:model="special_accommodation_details" rows="2"
-                                class="w-full rounded-lg border border-slate-300 bg-white px-3.5 py-2.5 text-sm text-slate-700 placeholder-slate-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#155E8A]/30 focus:border-[#155E8A] transition-shadow"></textarea>
-                            @error('special_accommodation_details')
+                            <label class="block text-sm font-semibold text-slate-700 mb-1.5">How did they hear about
+                                LIPA?</label>
+                            <input type="text" wire:model="how_heard_about_us"
+                                class="w-full rounded-lg border border-slate-300 bg-white px-3.5 py-2.5 text-sm text-slate-700 placeholder-slate-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#155E8A]/30 focus:border-[#155E8A] transition-shadow">
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-1.5">
+                                Sponsorship Type <span class="text-[#B91C1C]">*</span>
+                            </label>
+                            <select wire:model.live="sponsorship_type"
+                                class="w-full rounded-lg border border-slate-300 bg-white px-3.5 py-2.5 text-sm text-slate-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#155E8A]/30 focus:border-[#155E8A] transition-shadow">
+                                <option value="">Select...</option>
+                                <option value="self">Self-Sponsored</option>
+                                <option value="employer">Employer-Sponsored</option>
+                                <option value="other">Other</option>
+                            </select>
+                            @error('sponsorship_type')
                                 <p class="text-xs text-[#B91C1C] mt-1 font-medium">{{ $message }}</p>
                             @enderror
                         </div>
-                    @endif
+
+                        @if (in_array($sponsorship_type, ['employer', 'other']))
+                            <div>
+                                <label class="block text-sm font-semibold text-slate-700 mb-1.5">
+                                    Sponsor Organization Name <span class="text-[#B91C1C]">*</span>
+                                </label>
+                                <input type="text" wire:model="sponsor_organization_name"
+                                    class="w-full rounded-lg border border-slate-300 bg-white px-3.5 py-2.5 text-sm text-slate-700 placeholder-slate-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#155E8A]/30 focus:border-[#155E8A] transition-shadow">
+                                @error('sponsor_organization_name')
+                                    <p class="text-xs text-[#B91C1C] mt-1 font-medium">{{ $message }}</p>
+                                @enderror
+                            </div>
+                        @endif
+
+                        <div
+                            class="sm:col-span-2 flex items-center gap-2.5 bg-[#F8FAFC] border border-[#E2E8F0] rounded-lg px-3.5 py-3">
+                            <input type="checkbox" wire:model="requires_invoice" id="requires_invoice"
+                                class="h-4 w-4 rounded border-slate-300 text-[#155E8A] focus:ring-[#155E8A]/30">
+                            <label for="requires_invoice" class="text-sm text-slate-700">Requires an invoice</label>
+                        </div>
+                    </div>
                 </div>
+
             </div>
         @endif
 
-        {{-- Section G — Account Setup --}}
-        @if ($currentStep === 7)
-            <div>
-                <div class="flex items-center gap-2 mb-5">
-                    <span class="h-8 w-8 rounded-lg bg-sky-50 text-[#155E8A] flex items-center justify-center">
-                        <i class="fas fa-key text-sm"></i>
-                    </span>
-                    <div>
-                        <h2 class="text-sm font-bold uppercase tracking-wide text-[#155E8A]">Section G — Account Setup
-                        </h2>
-                        <p class="text-xs text-slate-400">Login credentials for the student</p>
+        {{-- ============ Step 4 — Emergency & Account ============ --}}
+        @if ($currentStep === 4)
+            <div class="space-y-6">
+
+                <div>
+                    <div class="flex items-center gap-2 mb-5">
+                        <span class="h-8 w-8 rounded-lg bg-sky-50 text-[#155E8A] flex items-center justify-center">
+                            <i class="fas fa-phone-volume text-sm"></i>
+                        </span>
+                        <div>
+                            <h2 class="text-sm font-bold uppercase tracking-wide text-[#155E8A]">Section F —
+                                Emergency Contact</h2>
+                            <p class="text-xs text-slate-400">Who to reach in case of emergency</p>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-1.5">
+                                Emergency Contact Name <span class="text-[#B91C1C]">*</span>
+                            </label>
+                            <input type="text" wire:model="emergency_contact_name"
+                                class="w-full rounded-lg border border-slate-300 bg-white px-3.5 py-2.5 text-sm text-slate-700 placeholder-slate-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#155E8A]/30 focus:border-[#155E8A] transition-shadow">
+                            @error('emergency_contact_name')
+                                <p class="text-xs text-[#B91C1C] mt-1 font-medium">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-1.5">
+                                Emergency Contact Phone <span class="text-[#B91C1C]">*</span>
+                            </label>
+                            <input type="text" wire:model="emergency_contact_phone"
+                                class="w-full rounded-lg border border-slate-300 bg-white px-3.5 py-2.5 text-sm text-slate-700 placeholder-slate-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#155E8A]/30 focus:border-[#155E8A] transition-shadow">
+                            @error('emergency_contact_phone')
+                                <p class="text-xs text-[#B91C1C] mt-1 font-medium">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-1.5">
+                                Relationship <span class="text-[#B91C1C]">*</span>
+                            </label>
+                            <input type="text" wire:model="emergency_contact_relationship"
+                                class="w-full rounded-lg border border-slate-300 bg-white px-3.5 py-2.5 text-sm text-slate-700 placeholder-slate-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#155E8A]/30 focus:border-[#155E8A] transition-shadow">
+                            @error('emergency_contact_relationship')
+                                <p class="text-xs text-[#B91C1C] mt-1 font-medium">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        <div
+                            class="sm:col-span-2 flex items-center gap-2.5 bg-[#F8FAFC] border border-[#E2E8F0] rounded-lg px-3.5 py-3">
+                            <input type="checkbox" wire:model.live="requires_special_accommodation"
+                                id="requires_accommodation"
+                                class="h-4 w-4 rounded border-slate-300 text-[#155E8A] focus:ring-[#155E8A]/30">
+                            <label for="requires_accommodation" class="text-sm text-slate-700">Requires special
+                                accommodation</label>
+                        </div>
+
+                        @if ($requires_special_accommodation)
+                            <div class="sm:col-span-2">
+                                <label class="block text-sm font-semibold text-slate-700 mb-1.5">Accommodation
+                                    Details</label>
+                                <textarea wire:model="special_accommodation_details" rows="2"
+                                    class="w-full rounded-lg border border-slate-300 bg-white px-3.5 py-2.5 text-sm text-slate-700 placeholder-slate-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#155E8A]/30 focus:border-[#155E8A] transition-shadow"></textarea>
+                                @error('special_accommodation_details')
+                                    <p class="text-xs text-[#B91C1C] mt-1 font-medium">{{ $message }}</p>
+                                @enderror
+                            </div>
+                        @endif
                     </div>
                 </div>
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div
-                        class="sm:col-span-2 flex items-start gap-2.5 bg-sky-50 border border-sky-100 rounded-lg p-3.5 text-xs text-[#0B3A57]">
-                        <i class="fas fa-circle-info mt-0.5 text-[#155E8A]"></i>
-                        <span>This creates the student's login. A Student ID (e.g. LIPA/STU/{{ now()->year }}/0001)
-                            is
-                            generated automatically on save.</span>
+                <div class="pt-5 border-t border-[#E2E8F0]">
+                    <div class="flex items-center gap-2 mb-5">
+                        <span class="h-8 w-8 rounded-lg bg-sky-50 text-[#155E8A] flex items-center justify-center">
+                            <i class="fas fa-key text-sm"></i>
+                        </span>
+                        <div>
+                            <h2 class="text-sm font-bold uppercase tracking-wide text-[#155E8A]">Section G — Account
+                                Setup</h2>
+                            <p class="text-xs text-slate-400">Login credentials for the student</p>
+                        </div>
                     </div>
 
-                    <div>
-                        <label class="block text-sm font-semibold text-slate-700 mb-1.5">
-                            Email Address <span class="text-[#B91C1C]">*</span>
-                        </label>
-                        <input type="email" wire:model="email"
-                            class="w-full rounded-lg border border-slate-300 bg-white px-3.5 py-2.5 text-sm text-slate-700 placeholder-slate-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#155E8A]/30 focus:border-[#155E8A] transition-shadow">
-                        @error('email')
-                            <p class="text-xs text-[#B91C1C] mt-1 font-medium">{{ $message }}</p>
-                        @enderror
-                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div
+                            class="sm:col-span-2 flex items-start gap-2.5 bg-sky-50 border border-sky-100 rounded-lg p-3.5 text-xs text-[#0B3A57]">
+                            <i class="fas fa-circle-info mt-0.5 text-[#155E8A]"></i>
+                            <span>This creates the student's login. A Student ID (e.g.
+                                LIPA/STU/{{ now()->year }}/0001) is generated automatically once you submit.</span>
+                        </div>
 
-                    <div></div>
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-1.5">
+                                Email Address <span class="text-[#B91C1C]">*</span>
+                            </label>
+                            <input type="email" wire:model="email"
+                                class="w-full rounded-lg border border-slate-300 bg-white px-3.5 py-2.5 text-sm text-slate-700 placeholder-slate-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#155E8A]/30 focus:border-[#155E8A] transition-shadow">
+                            @error('email')
+                                <p class="text-xs text-[#B91C1C] mt-1 font-medium">{{ $message }}</p>
+                            @enderror
+                        </div>
 
-                    <div>
-                        <label class="block text-sm font-semibold text-slate-700 mb-1.5">
-                            Password <span class="text-[#B91C1C]">*</span>
-                        </label>
-                        <input type="password" wire:model="password"
-                            class="w-full rounded-lg border border-slate-300 bg-white px-3.5 py-2.5 text-sm text-slate-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#155E8A]/30 focus:border-[#155E8A] transition-shadow">
-                        @error('password')
-                            <p class="text-xs text-[#B91C1C] mt-1 font-medium">{{ $message }}</p>
-                        @enderror
-                    </div>
+                        <div></div>
 
-                    <div>
-                        <label class="block text-sm font-semibold text-slate-700 mb-1.5">Confirm Password</label>
-                        <input type="password" wire:model="password_confirmation"
-                            class="w-full rounded-lg border border-slate-300 bg-white px-3.5 py-2.5 text-sm text-slate-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#155E8A]/30 focus:border-[#155E8A] transition-shadow">
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-1.5">
+                                Password <span class="text-[#B91C1C]">*</span>
+                            </label>
+
+                            <input type="password" wire:model.live="password"
+                                class="w-full rounded-lg border border-slate-300 bg-white px-3.5 py-2.5 text-sm text-slate-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#155E8A]/30 focus:border-[#155E8A] transition-shadow">
+
+                            @error('password')
+                                <p class="text-xs text-[#B91C1C] mt-1 font-medium">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-1.5">
+                                Confirm Password
+                            </label>
+
+                            <input type="password" wire:model.live="password_confirmation"
+                                class="w-full rounded-lg border border-slate-300 bg-white px-3.5 py-2.5 text-sm text-slate-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#155E8A]/30 focus:border-[#155E8A] transition-shadow">
+
+                            {{-- Live password match message --}}
+                            @if ($password !== '' && $password_confirmation !== '')
+                                @if ($password === $password_confirmation)
+                                    <p class="mt-1 text-xs font-semibold text-green-600">
+                                        ✓ Passwords match.
+                                    </p>
+                                @else
+                                    <p class="mt-1 text-xs font-semibold text-red-600">
+                                        ✗ Passwords do not match.
+                                    </p>
+                                @endif
+                            @endif
+                        </div>
                     </div>
                 </div>
+
             </div>
         @endif
 
-        {{-- Section H — Application Details --}}
-        @if ($currentStep === 8)
+        {{-- ============ Step 5 — Application Details ============ --}}
+        @if ($currentStep === 5)
             <div>
                 <div class="flex items-center gap-2 mb-5">
                     <span class="h-8 w-8 rounded-lg bg-sky-50 text-[#155E8A] flex items-center justify-center">
                         <i class="fas fa-clipboard-list text-sm"></i>
                     </span>
                     <div>
-                        <h2 class="text-sm font-bold uppercase tracking-wide text-[#155E8A]">Section H — Training Needs
-                            Assessment</h2>
+                        <h2 class="text-sm font-bold uppercase tracking-wide text-[#155E8A]">Section H — Training
+                            Needs Assessment</h2>
                         <p class="text-xs text-slate-400">Interests and prior training</p>
                     </div>
                 </div>
@@ -584,8 +609,7 @@
                 <div class="grid grid-cols-1 gap-4">
                     <div>
                         <label class="block text-sm font-semibold text-slate-700 mb-1.5">Why are they interested in
-                            this
-                            course?</label>
+                            this course?</label>
                         <textarea wire:model="interest_reason" rows="3"
                             class="w-full rounded-lg border border-slate-300 bg-white px-3.5 py-2.5 text-sm text-slate-700 placeholder-slate-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#155E8A]/30 focus:border-[#155E8A] transition-shadow"></textarea>
                         @error('interest_reason')

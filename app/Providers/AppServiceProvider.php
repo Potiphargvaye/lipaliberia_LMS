@@ -26,37 +26,36 @@ class AppServiceProvider extends ServiceProvider
     }
 
     /**
- * Bootstrap any application services. 
- */
-public function boot(): void
+     * Bootstrap any application services. 
+     */
+    public function boot(): void
     {
         // Force HTTPS in production
         if ($this->app->environment('production')) {
             URL::forceScheme('https');
         }
 
-    // Register policies  
-$this->registerPolicies();
+        // Register policies  
+        $this->registerPolicies();
 
-// Student Portal
-Gate::define('is-student', function (User $user) {
-    return $user->hasRole('Student');
-});
+        // Student Portal
+        Gate::define('is-student', function (User $user) {
+            return $user->hasRole('Student');
+        });
 
-// Shared Admin Dashboard (all staff)
-Gate::define('is-admin', function (User $user) {
-    return $user->hasAnyRole([
-        'Super Admin',
-        'Administrator',
-        'Teacher',
-        'Facilitator',
-        'HR',
-        'Finance',
-        'Registrar',
-    ]);
-});
-
-}
+        // Shared Admin Dashboard (all staff)
+        Gate::define('is-admin', function (User $user) {
+            return $user->hasAnyRole([
+                'Super Admin',
+                'Administrator',
+                'Teacher',
+                'Facilitator',
+                'HR',
+                'Finance',
+                'Registrar',
+            ]);
+        });
+    }
 
     /**
      * Register the application's policies.

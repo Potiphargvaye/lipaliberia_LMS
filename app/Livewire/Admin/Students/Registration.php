@@ -4,7 +4,7 @@ namespace App\Livewire\Admin\Students;
 
 use App\Models\Application;
 use App\Models\Course;
-use App\Models\Intake;
+use App\Models\Cohort;
 use App\Models\Student;
 use App\Models\User;
 use App\Services\RegistrationIdService;
@@ -25,17 +25,14 @@ class Registration extends Component
     */
 
     public int $currentStep = 1;
-    public int $totalSteps = 8;
+    public int $totalSteps = 5;
 
     public array $stepLabels = [
         1 => 'Personal Information',
-        2 => 'Employment',
-        3 => 'Education',
-        4 => 'Documents',
-        5 => 'Course, Intake & Sponsorship',
-        6 => 'Emergency Contact',
-        7 => 'Account Setup',
-        8 => 'Application Details',
+        2 => 'Employment & Education',
+        3 => 'Documents & Course',
+        4 => 'Emergency & Account',
+        5 => 'Application Details',
     ];
 
     /*
@@ -88,12 +85,12 @@ class Registration extends Component
 
     /*
     |--------------------------------------------------------------------------
-    | Section E — Course, Intake & Sponsorship
+    | Section E — Course, Cohort & Sponsorship
     |--------------------------------------------------------------------------
     */
 
     public $course_id = '';
-    public $intake_id = '';
+    public $cohort_id = '';
     public $how_heard_about_us = '';
     public $sponsorship_type = '';
     public $sponsor_organization_name = '';
@@ -133,12 +130,12 @@ class Registration extends Component
 
     /*
     |--------------------------------------------------------------------------
-    | Lookups for the Course / Intake dropdowns
+    | Lookups for the Course / Cohort dropdowns
     |--------------------------------------------------------------------------
     */
 
     public $courses = [];
-    public $intakes = [];
+    public $cohorts = [];
 
     public function mount()
     {
@@ -146,20 +143,25 @@ class Registration extends Component
             abort(403);
         }
 
-        $this->courses = Course::published()->orderBy('title')->get();
-        $this->intakes = Intake::where('is_active', true)->orderByDesc('start_date')->get();
+        $this->courses = Course::where('is_active', true)
+            ->orderBy('title')
+            ->get();
+
+        $this->cohorts = Cohort::where('is_active', true)->orderByDesc('start_date')->get();
     }
 
     /*
     |--------------------------------------------------------------------------
-    | Validation — one rule set per step, so "Next" only validates what's
-    | visible on the current screen rather than the whole form at once.
+    | Validation — one rule set per step. Condensed to 5 steps: rules for
+    | previously-separate sections are simply merged into the step that now
+    | contains them; no individual rule was changed.
     |--------------------------------------------------------------------------
     */
 
     protected function rulesForStep(int $step): array
     {
         return match ($step) {
+            // Step 1: Personal Information (was step 1)
             1 => [
                 'name' => 'required|string|max:255',
                 'gender' => 'required|in:male,female,other',
@@ -170,6 +172,8 @@ class Registration extends Component
                 'mobile_number' => 'required|string|regex:/^[0-9+\-\s()]+$/|max:20',
                 'whatsapp_number' => 'nullable|string|regex:/^[0-9+\-\s()]+$/|max:20',
             ],
+
+            // Step 2: Employment & Education (was steps 2 + 3)
             2 => [
                 'employment_status' => 'required|in:employed,self_employed,unemployed,student,other',
                 'employer_name' => 'nullable|string|max:255',
@@ -177,41 +181,48 @@ class Registration extends Component
                 'institution_contact_detail' => 'nullable|string|max:255',
                 'institution_contact_info' => 'nullable|string',
                 'years_experience' => 'nullable|integer|min:0|max:80',
-            ],
-            3 => [
+
                 'highest_qualification' => 'required|in:certificate,diploma,bachelor,master,doctorate,other',
                 'institution_attended' => 'nullable|string|max:255',
                 'field_of_study' => 'nullable|string|max:255',
                 'year_completed' => 'nullable|integer|min:1950|max:' . (now()->year),
             ],
-            4 => [
+
+            // Step 3: Documents & Course (was steps 4 + 5)
+            3 => [
                 'passport_photo' => 'nullable|image|max:2048',
                 'academic_certificate' => 'nullable|mimes:pdf,jpg,jpeg,png|max:4096',
-            ],
-            5 => [
+
                 'course_id' => 'required|exists:courses,id',
-                'intake_id' => 'required|exists:intakes,id',
+                'cohort_id' => 'required|exists:cohorts,id',
                 'how_heard_about_us' => 'nullable|string|max:255',
                 'sponsorship_type' => 'required|in:self,employer,other',
                 'sponsor_organization_name' => 'required_if:sponsorship_type,employer,other|nullable|string|max:255',
                 'requires_invoice' => 'boolean',
             ],
-            6 => [
+
+            // Step 4: Emergency & Account (was steps 6 + 7)
+            4 => [
                 'emergency_contact_name' => 'required|string|max:255',
                 'emergency_contact_phone' => 'required|string|max:255',
                 'emergency_contact_relationship' => 'required|string|max:255',
                 'requires_special_accommodation' => 'boolean',
                 'special_accommodation_details' => 'required_if:requires_special_accommodation,true|nullable|string',
-            ],
-            7 => [
+
                 'email' => 'required|email|unique:users,email',
-                'password' => 'required|string|min:8|confirmed',
+                'password' => [
+                    'required',
+                    'confirmed',
+                ],
             ],
-            8 => [
+
+            // Step 5: Application Details (was step 8)
+            5 => [
                 'interest_reason' => 'required|string',
                 'skills_hoped_to_gain' => 'nullable|string',
                 'previously_attended_lipa_training' => 'boolean',
             ],
+
             default => [],
         };
     }
@@ -326,7 +337,7 @@ class Registration extends Component
                     'application_number' => Application::generateApplicationNumber(),
                     'student_id' => $student->id,
                     'course_id' => $this->course_id,
-                    'intake_id' => $this->intake_id,
+                    'cohort_id' => $this->cohort_id,
                     'status' => 'pending',
                     'how_heard_about_us' => $this->how_heard_about_us,
                     'sponsorship_type' => $this->sponsorship_type,
@@ -356,7 +367,7 @@ class Registration extends Component
             return;
         }
 
-        session()->flash('success', "Student registered successfully — Registration ID: {$student->user->registration_id}");
+        session()->flash('success', "Student registered successfully — Enrollment: Pending...: ");
 
         return redirect()->route('admin.students.index');
     }

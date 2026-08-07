@@ -33,7 +33,16 @@
     <link rel="stylesheet" href="{{ asset('lipa-liberia-public-site/assets/css/nice-select.css') }}">
     <link rel="stylesheet" href="{{ asset('lipa-liberia-public-site/assets/css/style.css') }}">
 
+
+
     @stack('styles')
+    <link rel="stylesheet" href="{{ asset('lipa-liberia-public-site/assets/css/style.css') }}">
+
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+    @stack('styles')
+
+
 
 </head>
 
@@ -117,7 +126,7 @@
                                                 </li>
 
                                                 <li class="button-header margin-left">
-                                                    <a href="{{ url('/registeration-form') }}" class="btn">
+                                                    <a href="{{ url('/register') }}" class="btn">
                                                         Apply Now
                                                     </a>
                                                 </li>
@@ -125,13 +134,12 @@
                                                 <li class="button-header">
                                                     <a href="{{ route('login') }}" id="student-portal-btn"
                                                         class="btn btn3">
-                                                        <span id="student-portal-label">Student Portal</span>
+                                                        <span id="student-portal-label">Login to Portal</span>
                                                     </a>
                                                 </li>
                                             </ul>
 
                                         </nav>
-
                                     </div>
 
                                 </div>

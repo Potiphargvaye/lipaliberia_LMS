@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Enrollment extends Model
 {
@@ -10,7 +11,7 @@ class Enrollment extends Model
         'application_id',
         'student_id',
         'course_id',
-        'intake_id',
+        'cohort_id',
         'status',
         'progress_percentage',
         'certificate_issued',
@@ -40,22 +41,24 @@ class Enrollment extends Model
         return $this->belongsTo(Application::class);
     }
 
-
     public function student()
     {
         return $this->belongsTo(Student::class);
     }
-
 
     public function course()
     {
         return $this->belongsTo(Course::class);
     }
 
-
-    public function intake()
+    public function cohort()
     {
-        return $this->belongsTo(Intake::class);
+        return $this->belongsTo(Cohort::class);
+    }
+
+    public function feeAssignments(): HasMany
+    {
+        return $this->hasMany(FeeAssignment::class);
     }
 
 

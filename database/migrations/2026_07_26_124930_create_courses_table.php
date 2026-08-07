@@ -8,11 +8,6 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * This is a minimal stub — extended later by the full Course Management
-     * module (categories/instructors will likely become their own related
-     * tables at that point; kept as plain strings here to unblock the
-     * Student Module now).
      */
     public function up(): void
     {
@@ -20,21 +15,32 @@ return new class extends Migration
 
             $table->id();
 
+            // Basic Information
             $table->string('title');
+            $table->string('slug')->unique();
 
-            $table->text('description')->nullable();
-
-            $table->string('thumbnail')->nullable();
-
+            // Classification
             $table->string('category')->nullable();
+            $table->string('group')->nullable();
+            $table->string('group_label')->nullable();
+            $table->string('programme_type')->nullable();
 
-            $table->string('instructor')->nullable();
+            // Course Details
+            $table->text('overview')->nullable();
+            $table->text('target_audience')->nullable();
+            $table->text('entry_requirements')->nullable();
 
+            // Logistics
             $table->string('duration')->nullable();
+            $table->string('schedule')->nullable();
+            $table->decimal('fee', 10, 2)->nullable();
+            $table->unsignedInteger('seats')->nullable();
 
-            $table->enum('level', ['beginner', 'intermediate', 'advanced'])->nullable();
+            // Media
+            $table->string('image')->nullable();
 
-            $table->enum('status', ['draft', 'published', 'archived'])->default('draft');
+            // Publication
+            $table->boolean('is_active')->default(true);
 
             $table->timestamps();
         });

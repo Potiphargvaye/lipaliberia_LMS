@@ -74,11 +74,11 @@ class RolePermissionSeeder extends Seeder
 
             'manage settings',
             'view roles',
-'create roles',
-'edit roles',
-'delete roles',
+            'create roles',
+            'edit roles',
+            'delete roles',
 
-'view permissions',
+            'view permissions',
 
         ]);
 
@@ -125,17 +125,17 @@ class RolePermissionSeeder extends Seeder
 
         $facilitator->syncPermissions([
 
-'view dashboard',
+            'view dashboard',
 
-'view students',
+            'view students',
 
-'view courses',
+            'view courses',
 
-'view lessons',
+            'view lessons',
 
-'create assignments',
+            'create assignments',
 
-'create quizzes',
+            'create quizzes',
 
         ]);
 
@@ -153,15 +153,15 @@ class RolePermissionSeeder extends Seeder
         |--------------------------------------------------------------------------
         */
 
-       Role::findByName('HR')->syncPermissions([
-    'view dashboard',
+        Role::findByName('HR')->syncPermissions([
+            'view dashboard',
 
-    'view users',
-    'create users',
-    'edit users',
+            'view users',
+            'create users',
+            'edit users',
 
-    'view reports',
-]);
+            'view reports',
+        ]);
 
         /*
         |--------------------------------------------------------------------------
@@ -169,11 +169,12 @@ class RolePermissionSeeder extends Seeder
         |--------------------------------------------------------------------------
         */
 
-       Role::findByName('Finance')->syncPermissions([
-    'view dashboard',
+        Role::findByName('Finance')->syncPermissions([
+            'view dashboard',
 
-    'view reports',
-]);
+            'view reports',
+            'manage fees',
+        ]);
 
         /*
         |--------------------------------------------------------------------------
@@ -181,16 +182,16 @@ class RolePermissionSeeder extends Seeder
         |--------------------------------------------------------------------------
         */
 
-      Role::findByName('Registrar')->syncPermissions([
+        Role::findByName('Registrar')->syncPermissions([
 
-    'view dashboard',
+            'view dashboard',
 
-    'view students',
-    'create students',
-    'edit students',
+            'view students',
+            'create students',
+            'edit students',
 
-    'view enrollments',
-    'approve enrollments',
-]);
+            'view enrollments',
+            'approve enrollments',
+        ]);
     }
 }

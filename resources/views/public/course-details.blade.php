@@ -65,11 +65,22 @@
                                 <strong>{{ $course['schedule'] }}</strong>
                             </div>
 
-                            @if (Route::has('registeration-form') || Route::has('registration.create'))
-                                <a href="{{ Route::has('registeration-form') ? url('/registeration-form') : route('registration.create') }}"
-                                    class="course-apply-btn">Apply Now</a>
+                            @if (Route::has('/register') || Route::has('registration.create'))
+                                <a href="{{ Route::has('register') ? url('/register') : route('registration.create') }}"
+                                    target="_blank" rel="noopener" class="course-apply-btn" id="applyNowBtn">
+                                    <span class="apply-btn-label">Apply Now</span>
+                                    <span class="apply-btn-loading">
+                                        <i class="fas fa-spinner fa-spin"></i> Redirecting...
+                                    </span>
+                                </a>
                             @else
-                                <a href="{{ url('/registeration-form') }}" class="course-apply-btn">Apply Now</a>
+                                <a href="{{ url('/register') }}" target="_blank" rel="noopener" class="course-apply-btn"
+                                    id="applyNowBtn">
+                                    <span class="apply-btn-label">Apply Now</span>
+                                    <span class="apply-btn-loading">
+                                        <i class="fas fa-spinner fa-spin"></i> Redirecting...
+                                    </span>
+                                </a>
                             @endif
                         </div>
                     </div>
@@ -77,7 +88,7 @@
                 </div>
 
                 {{-- ============================================================
-                     COURSE DETAILS
+                     COURSE DETAILS 
                 ============================================================ --}}
                 <div class="row mt-5">
 
@@ -280,8 +291,65 @@
                     height: 220px;
                 }
             }
+
+            .course-apply-btn {
+                position: relative;
+                display: block;
+                text-align: center;
+                margin-top: 20px;
+                padding: 14px;
+                border-radius: 50px;
+                font-weight: 600;
+                color: #fff;
+                background: linear-gradient(120deg, #0F4C81, #0EA5E9);
+                transition: transform .2s ease, box-shadow .2s ease;
+            }
+
+            .course-apply-btn:hover {
+                color: #fff;
+                transform: translateY(-2px);
+                box-shadow: 0 10px 25px rgba(15, 76, 129, 0.25);
+            }
+
+            .course-apply-btn .apply-btn-loading {
+                display: none;
+            }
+
+            .course-apply-btn.is-loading {
+                pointer-events: none;
+                opacity: 0.85;
+            }
+
+            .course-apply-btn.is-loading .apply-btn-label {
+                display: none;
+            }
+
+            .course-apply-btn.is-loading .apply-btn-loading {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                gap: 8px;
+            }
         </style>
 
     </main>
 
+    <script>
+        document.getElementById('applyNowBtn')?.addEventListener('click', function(e) {
+            if (this.classList.contains('is-loading')) {
+                e.preventDefault();
+                return;
+            }
+
+            e.preventDefault();
+
+            const url = this.getAttribute('href');
+            this.classList.add('is-loading');
+
+            setTimeout(() => {
+                window.open(url, '_blank', 'noopener');
+                this.classList.remove('is-loading');
+            }, 3000);
+        });
+    </script>
 @endsection

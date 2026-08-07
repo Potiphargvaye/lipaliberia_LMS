@@ -100,7 +100,7 @@
                     <p class="text-xs text-[#0B3A57] uppercase font-semibold">Active Enrollment</p>
                     @if ($activeEnrollment)
                         <p class="text-slate-800 font-medium mt-1">{{ $activeEnrollment->course->title ?? '—' }} —
-                            {{ $activeEnrollment->intake->name ?? '—' }}</p>
+                            {{ $activeEnrollment->cohort->name ?? '—' }}</p>
                         <div class="flex items-center gap-2 mt-2">
                             <div class="w-24 h-2 rounded-full bg-white overflow-hidden">
                                 <div class="h-full bg-[#155E8A]"
@@ -230,7 +230,7 @@
                             <tr>
                                 <th class="px-4 py-3 text-left">Application #</th>
                                 <th class="px-4 py-3 text-left">Course</th>
-                                <th class="px-4 py-3 text-left">Intake</th>
+                                <th class="px-4 py-3 text-left">Cohort</th>
                                 <th class="px-4 py-3 text-center">Status</th>
                                 <th class="px-4 py-3 text-left">Submitted</th>
                             </tr>
@@ -241,7 +241,7 @@
                                     <td class="px-4 py-3 font-mono text-xs text-slate-500">
                                         {{ $application->application_number }}</td>
                                     <td class="px-4 py-3">{{ $application->course->title ?? '—' }}</td>
-                                    <td class="px-4 py-3">{{ $application->intake->name ?? '—' }}</td>
+                                    <td class="px-4 py-3">{{ $application->cohort->name ?? '—' }}</td>
                                     <td class="px-4 py-3 text-center">
                                         <span
                                             class="inline-flex px-2.5 py-1 rounded-full text-xs font-semibold
@@ -283,7 +283,7 @@
                         <thead class="bg-slate-50 text-slate-500 text-xs uppercase">
                             <tr>
                                 <th class="px-4 py-3 text-left">Course</th>
-                                <th class="px-4 py-3 text-left">Intake</th>
+                                <th class="px-4 py-3 text-left">Cohort</th>
                                 <th class="px-4 py-3 text-center">Status</th>
                                 <th class="px-4 py-3 text-center">Progress</th>
                                 <th class="px-4 py-3 text-center">Certificate</th>
@@ -293,7 +293,7 @@
                             @forelse ($enrollments as $enrollment)
                                 <tr>
                                     <td class="px-4 py-3">{{ $enrollment->course->title ?? '—' }}</td>
-                                    <td class="px-4 py-3">{{ $enrollment->intake->name ?? '—' }}</td>
+                                    <td class="px-4 py-3">{{ $enrollment->cohort->name ?? '—' }}</td>
                                     <td class="px-4 py-3 text-center">
                                         <span
                                             class="inline-flex px-2.5 py-1 rounded-full text-xs font-semibold bg-slate-100 text-slate-600">
@@ -366,11 +366,45 @@
             <div
                 class="bg-white rounded-2xl shadow-2xl ring-1 ring-black/5 w-full max-w-5xl max-h-[92vh] flex flex-col overflow-hidden">
 
-                <div class="bg-[#155E8A] px-6 py-5 flex items-center justify-between shrink-0">
-                    <h2 class="text-white text-lg font-bold">Edit Student — {{ $student->name }}</h2>
-                    <button wire:click="closeEditModal" class="text-white/80 hover:text-white">
-                        <i class="fas fa-xmark text-xl"></i>
-                    </button>
+                <div class="relative bg-[#155E8A] px-5 sm:px-6 py-5 shrink-0">
+
+                    <div class="absolute bottom-0 left-0 right-0 h-1 bg-[#B91C1C]"></div>
+
+                    <div class="flex items-start justify-between gap-3">
+
+                        <div class="flex items-center gap-3 min-w-0">
+
+                            <div
+                                class="h-11 w-11 shrink-0 rounded-full bg-white/10 border border-white/25 flex items-center justify-center overflow-hidden p-1.5">
+
+                                <img src="{{ asset('lipa-liberia-public-site/assets/img/logo/logo_header.png') }}"
+                                    alt="LIPA Logo" class="h-full w-full object-contain">
+
+                            </div>
+
+                            <div class="min-w-0">
+
+                                <p class="text-[11px] uppercase tracking-[0.14em] text-sky-200 font-semibold truncate">
+                                    Liberia Institute of Public Administration
+                                </p>
+
+                                <h2 class="text-white text-base sm:text-xl font-bold leading-tight mt-0.5">
+                                    Edit Student Profile
+                                </h2>
+
+                            </div>
+
+                        </div>
+
+                        <button wire:click="closeEditModal"
+                            class="shrink-0 h-10 w-10 rounded-lg bg-white/10 hover:bg-red-600 text-white transition-colors flex items-center justify-center">
+
+                            <i class="fas fa-times"></i>
+
+                        </button>
+
+                    </div>
+
                 </div>
 
                 <form wire:submit.prevent="updateStudent" class="overflow-y-auto p-6 space-y-8 bg-[#F8FAFC] flex-1">

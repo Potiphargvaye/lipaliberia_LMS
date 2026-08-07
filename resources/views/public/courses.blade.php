@@ -91,7 +91,7 @@
 
                                             <a href="{{ route('courses.show', $course['slug']) }}"
                                                 class="border-btn border-btn2">
-                                                Learn More
+                                                Apply Now!
                                             </a>
                                         </div>
                                     </div>

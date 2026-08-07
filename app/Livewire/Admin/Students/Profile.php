@@ -287,12 +287,12 @@ class Profile extends Component
     public function render()
     {
         $applications = $this->student->applications()
-            ->with(['course', 'intake'])
+            ->with(['course', 'cohort'])
             ->latest()
             ->get();
 
         $enrollments = $this->student->enrollments()
-            ->with(['course', 'intake'])
+            ->with(['course', 'cohort'])
             ->latest()
             ->get();
 

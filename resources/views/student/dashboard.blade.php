@@ -106,7 +106,7 @@
                         @if ($latestApplication)
                             <p class="mb-2 fw-semibold">{{ $latestApplication->course->title ?? 'Course' }}</p>
                             <p class="mb-3 small text-muted">
-                                Intake: {{ $latestApplication->intake->name ?? '—' }} &middot;
+                                Cohort: {{ $latestApplication->cohort->name ?? '—' }} &middot;
                                 Submitted {{ $latestApplication->created_at->format('M d, Y') }}
                             </p>
 
@@ -169,7 +169,7 @@
 
                         @if ($enrollmentToShow)
                             <p class="mb-1 fw-semibold">{{ $enrollmentToShow->course->title ?? 'Course' }}</p>
-                            <p class="mb-3 small text-muted">Intake: {{ $enrollmentToShow->intake->name ?? '—' }}</p>
+                            <p class="mb-3 small text-muted">Cohort: {{ $enrollmentToShow->cohort->name ?? '—' }}</p>
 
                             <div class="d-flex align-items-center justify-content-between mb-2">
                                 <span

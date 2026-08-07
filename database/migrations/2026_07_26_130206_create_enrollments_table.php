@@ -11,7 +11,7 @@ return new class extends Migration
      *
      * An Enrollment only ever exists because an Application was approved —
      * application_id is unique so there can never be more than one
-     * Enrollment per Application. student_id/course_id/intake_id are
+     * Enrollment per Application. student_id/course_id/cohort_id are
      * denormalized copies from the source Application, kept in sync at
      * creation time, so the admin table and student dashboard can query
      * this table directly without deep joins.
@@ -21,6 +21,7 @@ return new class extends Migration
         Schema::create('enrollments', function (Blueprint $table) {
 
             $table->id();
+
 
             $table->foreignId('application_id')
                 ->unique()
@@ -35,8 +36,8 @@ return new class extends Migration
                 ->constrained('courses')
                 ->restrictOnDelete();
 
-            $table->foreignId('intake_id')
-                ->constrained('intakes')
+            $table->foreignId('cohort_id')
+                ->constrained('cohorts')
                 ->restrictOnDelete();
 
             $table->enum('status', [

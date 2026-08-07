@@ -78,6 +78,20 @@
                 </li>
             @endcan
 
+            <li class="mb-0.5 group {{ request()->routeIs('admin.courses.index') ? 'active selected' : '' }}">
+
+                <a href="{{ route('admin.courses.index') }}"
+                    class="lipa-link {{ request()->routeIs('admin.courses.index') ? 'nav-active' : '' }}">
+
+                    <i class='bx bx-book-open lipa-icon'></i>
+
+                    <span class="text-sm">
+                        Courses
+                    </span>
+
+                </a>
+
+            </li>
             @can('manage grade assignments')
                 <li class="mb-0.5 group">
                     <a href="{{ route('admin.grade-assignments') }}"
@@ -235,15 +249,19 @@
                 </ul>
             </li>
 
-            <li class="lipa-section">BLOG</li>
 
-            <li class="mb-0.5 group">
-                <a href="" class="lipa-link">
-                    <i class='bx bxl-blogger lipa-icon'></i>
-                    <span class="text-sm">Post</span>
-                </a>
-            </li>
 
+            <li class="lipa-section">FINANCE</li>
+
+            @can('manage fees')
+                <li class="mb-0.5 group">
+                    <a href="{{ route('admin.fees.index') }}"
+                        class="lipa-link {{ request()->routeIs('admin.fees.*') ? 'lipa-active' : '' }}">
+                        <i class="ri-money-dollar-circle-line lipa-icon"></i>
+                        <span class="text-sm">Fees Management</span>
+                    </a>
+                </li>
+            @endcan
             <li class="mb-0.5 group">
                 <a href="" class="lipa-link">
                     <i class='bx bx-archive lipa-icon'></i>

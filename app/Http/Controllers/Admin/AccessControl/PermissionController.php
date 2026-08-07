@@ -49,6 +49,7 @@ class PermissionController extends Controller
 
     /**
      * Store a new permission.
+     * 
      */
     public function store(Request $request)
     {

@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 class Student extends Model
 {
@@ -65,7 +66,7 @@ class Student extends Model
 
     /**
      * Every Application this student has ever submitted, across all
-     * courses/intakes over time.
+     * courses/ cohort over time.
      */
     public function applications(): HasMany
     {
@@ -81,6 +82,18 @@ class Student extends Model
         return $this->hasMany(Enrollment::class);
     }
 
+
+
+
+    /**
+     * Every Fee Assignment across all of this student's enrollments.
+     * Chained through Enrollment since fee_assignments now belongs to
+     * enrollment_id, not student_id directly.
+     */
+    public function feeAssignments(): HasManyThrough
+    {
+        return $this->hasManyThrough(FeeAssignment::class, Enrollment::class);
+    }
     /*
     |--------------------------------------------------------------------------
     | Convenience accessors

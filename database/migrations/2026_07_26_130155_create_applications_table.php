@@ -25,8 +25,8 @@ return new class extends Migration
                 ->constrained('courses')
                 ->restrictOnDelete();
 
-            $table->foreignId('intake_id')
-                ->constrained('intakes')
+            $table->foreignId('cohort_id')
+                ->constrained('cohorts')
                 ->restrictOnDelete();
 
             $table->enum('status', [

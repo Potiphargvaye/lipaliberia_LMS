@@ -15,7 +15,7 @@ class RegistrationIdService
      * RegisteredUserController@store. The algorithm and format are
      * unchanged — only the location has moved, so both Public Registration
      * and Admin Registration call this single source of truth instead of
-     * duplicating the loop.
+     * duplicating the loop. 
      */
     public function generate(): string
     {

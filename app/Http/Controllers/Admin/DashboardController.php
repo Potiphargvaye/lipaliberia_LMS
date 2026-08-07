@@ -20,15 +20,16 @@ class DashboardController extends Controller
         |--------------------------------------------------------------------------
         */
 
-        $totalUsers = User::count();
+        // $totalUsers = User::count();
 
         // Staff users (everyone except students)
-        $totalStaff = User::whereDoesntHave('roles', function ($query) {
-            $query->where('name', 'Student');
-        })->count();
+        // $totalStaff = User::whereDoesntHave('roles', function ($query) {
+        //     $query->where('name', 'Student');
+        // })->count();
 
         // Students
-        $totalStudents = Student::count();
+        // $totalStudents = Student::count();
+
 
         /*
         |--------------------------------------------------------------------------
@@ -36,23 +37,29 @@ class DashboardController extends Controller
         |--------------------------------------------------------------------------
         */
 
-        $totalCandidates = Student::where('status', 'candidate')->count();
+        // $totalCandidates = Student::where('status', 'candidate')->count();
 
-        $totalAdmitted = Student::where('status', 'admitted')->count();
+        // $totalAdmitted = Student::where('status', 'admitted')->count();
 
-        $totalRegistered = Student::where('status', 'registered')->count();
+        // $totalRegistered = Student::where('status', 'registered')->count();
 
-        $totalActive = Student::where('status', 'active')->count();
+        // $totalActive = Student::where('status', 'active')->count();
 
-        $totalCompleted = Student::where('status', 'completed')->count();
+        // $totalCompleted = Student::where('status', 'completed')->count();
 
-        $totalDropout = Student::where('status', 'dropout')->count();
+        // $totalDropout = Student::where('status', 'dropout')->count();
+
 
         /*
         |--------------------------------------------------------------------------
         | Dashboard
         |--------------------------------------------------------------------------
         */
+
+        return view('admin.dashboard');
+
+        /*
+        // Restore this later when the dashboard cards are needed.
 
         return view('admin.dashboard', compact(
             'totalUsers',
@@ -65,5 +72,6 @@ class DashboardController extends Controller
             'totalCompleted',
             'totalDropout'
         ));
+        */
     }
 }

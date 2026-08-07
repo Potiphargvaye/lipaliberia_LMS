@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use App\Models\Cohort;
 
 class Application extends Model
 {
@@ -15,7 +16,7 @@ class Application extends Model
         'application_number',
         'student_id',
         'course_id',
-        'intake_id',
+        'cohort_id',
         'status',
         'how_heard_about_us',
         'sponsorship_type',
@@ -51,11 +52,10 @@ class Application extends Model
         return $this->belongsTo(Course::class);
     }
 
-    public function intake(): BelongsTo
+    public function cohort()
     {
-        return $this->belongsTo(Intake::class);
+        return $this->belongsTo(Cohort::class);
     }
-
     public function reviewer(): BelongsTo
     {
         return $this->belongsTo(User::class, 'reviewed_by');
@@ -94,7 +94,7 @@ class Application extends Model
         return $this->enrollment()->create([
             'student_id' => $this->student_id,
             'course_id' => $this->course_id,
-            'intake_id' => $this->intake_id,
+            'cohort_id' => $this->cohort_id,
             'status' => 'enrolled',
         ]);
     }

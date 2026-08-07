@@ -322,7 +322,7 @@ class Index extends Component
             ->pluck('total', 'status');
 
         $enrollments = Enrollment::query()
-            ->with(['student.user', 'course', 'intake'])
+            ->with(['student.user', 'course', 'cohort'])
             ->where('status', $this->status)
             ->when($this->search, function ($query) {
                 $query->whereHas('student', function ($query) {

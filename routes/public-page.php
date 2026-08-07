@@ -37,11 +37,6 @@ Route::get('/blog', function () {
 });
 
 
-Route::get('/registeration-form', function () {
-    return view('public.registeration-form');
-});
-
-
 
 
 // Verification engine endpoint linking directly to your controller method above
@@ -51,18 +46,10 @@ Route::get('/verify/report-card/{id}', [PublicStudentController::class, 'verifyR
     ->name('public.verify.report_card')
     ->where('id', '.*');
 
-Route::get('/student/register', [PublicStudentController::class, 'create'])
-    ->name('public.students.create');
-
-Route::post('/student/register', [PublicStudentController::class, 'store'])
-    ->name('public.students.store');
 
 
 
-/**
- * Add these two lines to routes/web.php (near your other public routes).
- * Requires: use App\Http\Controllers\CourseController;
- */
+
 
 
 Route::get('/courses', [CourseController::class, 'index'])->name('courses.index');

@@ -123,8 +123,12 @@
 
 
                 <div class="pl-2 md:block text-left leading-tight">
-                    <h2 class="text-sm font-semibold text-white">{{ Auth::user()->name }}</h2>
-                    <p class="text-xs text-white/65">{{ ucfirst(Auth::user()->role) }}</p>
+                    <h2 class="text-sm font-semibold text-white">
+                        {{ Auth::user()?->name ?? 'Guest' }}
+                    </h2>
+                    <p class="text-xs text-white/65">
+                        {{ Auth::user()?->role ?? '' }}
+                    </p>
                 </div>
                 <i class="ri-arrow-down-s-line text-white/60 ml-1 text-base"></i>
             </button>

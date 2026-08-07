@@ -24,12 +24,12 @@ class StudentDashboardController extends Controller
             ->firstOrFail();
 
         $applications = $student->applications()
-            ->with(['course', 'intake'])
+            ->with(['course', 'cohort'])
             ->latest()
             ->get();
 
         $enrollments = $student->enrollments()
-            ->with(['course', 'intake'])
+            ->with(['course', 'cohort'])
             ->latest()
             ->get();
 

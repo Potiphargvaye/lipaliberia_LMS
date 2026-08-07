@@ -12,14 +12,28 @@ class Course extends Model
 
     protected $fillable = [
         'title',
-        'description',
-        'thumbnail',
+        'slug',
         'category',
-        'instructor',
+        'group',
+        'group_label',
+        'programme_type',
+        'overview',
+        'target_audience',
+        'entry_requirements',
         'duration',
-        'level',
-        'status',
+        'schedule',
+        'fee',
+        'seats',
+        'image',
+        'is_active',
     ];
+
+
+    protected $casts = [
+        'fee' => 'decimal:2',
+        'is_active' => 'boolean',
+    ];
+
 
     /*
     |--------------------------------------------------------------------------
@@ -32,10 +46,12 @@ class Course extends Model
         return $this->hasMany(Application::class);
     }
 
+
     public function enrollments(): HasMany
     {
         return $this->hasMany(Enrollment::class);
     }
+
 
     /*
     |--------------------------------------------------------------------------
@@ -43,12 +59,17 @@ class Course extends Model
     |--------------------------------------------------------------------------
     */
 
-    /**
-     * Courses currently open for new Applications — this is what the
-     * Admin/Public Registration wizards offer in the Course dropdown.
-     */
-    public function scopePublished($query)
+    public function scopeActive($query)
     {
-        return $query->where('status', 'published');
+        return $query->where('is_active', true);
+    }
+
+    /**
+     * Check if this course can be deleted.
+     */
+    public function canBeDeleted(): bool
+    {
+        return ! $this->applications()->exists()
+            && ! $this->enrollments()->exists();
     }
 }
