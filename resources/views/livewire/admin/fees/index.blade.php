@@ -39,7 +39,7 @@
             <div class="min-w-0">
                 <p class="text-xs text-slate-400 font-medium truncate">Fees Assigned</p>
                 <p class="text-base sm:text-lg font-bold text-slate-800 truncate">${{ number_format($feesAssigned, 2) }}
-                    LRD</p>
+                    USD</p>
             </div>
         </div>
 
@@ -50,7 +50,7 @@
             <div class="min-w-0">
                 <p class="text-xs text-slate-400 font-medium truncate">Fees Collected</p>
                 <p class="text-base sm:text-lg font-bold text-green-700 truncate">
-                    ${{ number_format($feesCollected, 2) }} LRD</p>
+                    ${{ number_format($feesCollected, 2) }} USD</p>
             </div>
         </div>
 
@@ -61,7 +61,7 @@
             <div class="min-w-0">
                 <p class="text-xs text-slate-400 font-medium truncate">Outstanding Balance</p>
                 <p class="text-base sm:text-lg font-bold text-[#B91C1C] truncate">
-                    ${{ number_format($outstandingBalance, 2) }}LRD</p>
+                    ${{ number_format($outstandingBalance, 2) }}USD</p>
             </div>
         </div>
 
