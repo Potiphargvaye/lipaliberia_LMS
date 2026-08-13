@@ -45,7 +45,8 @@ require __DIR__ . '/admin/admissions.php';
 require __DIR__ . '/admin/enrollments.php';
 require __DIR__ . '/admin/fees.php';
 require __DIR__ . '/admin/courses.php';
-
+require __DIR__ . '/student/dashboard.php';
+require __DIR__ . '/student/live-classes.php';
 
 
 // Public student registration
@@ -184,13 +185,5 @@ Route::middleware('auth')->group(function () {
 
             Route::get('/materials', [StudentDashboardController::class, 'materials'])
                 ->name('materials');
-
-
-
-            Route::get('/grades', [
-                \App\Http\Controllers\Students\StudentPortalGradeController::class,
-                'index'
-            ])
-                ->name('grades');
         });
 });

@@ -18,7 +18,7 @@
         </a>
     </div>
 
-    {{-- Stat Cards (static placeholder figures — no calculation logic) --}}
+    {{-- Stat Cards — live figures scoped to current filters --}}
     <div class="grid grid-cols-2 xs:grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
 
         <div class="bg-white border border-[#E2E8F0] rounded-xl p-3.5 sm:p-4 flex items-center gap-3 min-w-0">
@@ -27,7 +27,8 @@
             </div>
             <div class="min-w-0">
                 <p class="text-xs text-slate-400 font-medium truncate">Total Students</p>
-                <p class="text-base sm:text-lg font-bold text-slate-800 truncate">248</p>
+                <p class="text-base sm:text-lg font-bold text-slate-800 truncate">{{ number_format($totalStudents) }}
+                </p>
             </div>
         </div>
 
@@ -37,7 +38,8 @@
             </div>
             <div class="min-w-0">
                 <p class="text-xs text-slate-400 font-medium truncate">Fees Assigned</p>
-                <p class="text-base sm:text-lg font-bold text-slate-800 truncate">$142,500. LRD</p>
+                <p class="text-base sm:text-lg font-bold text-slate-800 truncate">${{ number_format($feesAssigned, 2) }}
+                    LRD</p>
             </div>
         </div>
 
@@ -47,7 +49,8 @@
             </div>
             <div class="min-w-0">
                 <p class="text-xs text-slate-400 font-medium truncate">Fees Collected</p>
-                <p class="text-base sm:text-lg font-bold text-green-700 truncate">$300.00 LRD</p>
+                <p class="text-base sm:text-lg font-bold text-green-700 truncate">
+                    ${{ number_format($feesCollected, 2) }} LRD</p>
             </div>
         </div>
 
@@ -57,7 +60,8 @@
             </div>
             <div class="min-w-0">
                 <p class="text-xs text-slate-400 font-medium truncate">Outstanding Balance</p>
-                <p class="text-base sm:text-lg font-bold text-[#B91C1C] truncate">$44,200.00</p>
+                <p class="text-base sm:text-lg font-bold text-[#B91C1C] truncate">
+                    ${{ number_format($outstandingBalance, 2) }}LRD</p>
             </div>
         </div>
 
@@ -67,8 +71,9 @@
                 <i class="fas fa-money-bill-wave text-sm"></i>
             </div>
             <div class="min-w-0">
-                <p class="text-xs text-slate-400 font-medium truncate">Total Paid</p>
-                <p class="text-base sm:text-lg font-bold text-slate-800 truncate">$98,300.LRD</p>
+                <p class="text-xs text-slate-400 font-medium truncate">Pending</p>
+                <p class="text-base sm:text-lg font-bold text-slate-800 truncate">{{ number_format($totalPaid) }}
+                    Assignments</p>
             </div>
         </div>
 

@@ -98,7 +98,7 @@
             {{-- Latest Application Status --}}
             <div class="col-12 col-lg-6">
                 <div class="card border-0 shadow-sm h-100">
-                    <div class="card-header bg-white border-0 pt-3 pb-0">
+                    <div class="card-header border-0 pt-3 pb-0">
                         <h6 class="fw-bold mb-0"><i class="bi bi-file-earmark-text me-2 text-primary"></i>Latest Application
                         </h6>
                     </div>
@@ -161,7 +161,7 @@
             {{-- Current Enrollment --}}
             <div class="col-12 col-lg-6">
                 <div class="card border-0 shadow-sm h-100">
-                    <div class="card-header bg-white border-0 pt-3 pb-0">
+                    <div class="card-header border-0 pt-3 pb-0">
                         <h6 class="fw-bold mb-0"><i class="bi bi-mortarboard me-2 text-primary"></i>Current Enrollment</h6>
                     </div>
                     <div class="card-body">
@@ -225,7 +225,7 @@
             {{-- Recent Activity --}}
             <div class="col-12 col-lg-7">
                 <div class="card border-0 shadow-sm h-100">
-                    <div class="card-header bg-white border-0 pt-3 pb-0">
+                    <div class="card-header border-0 pt-3 pb-0">
                         <h6 class="fw-bold mb-0"><i class="bi bi-clock-history me-2 text-primary"></i>Recent Activity</h6>
                     </div>
                     <div class="card-body">
@@ -255,52 +255,59 @@
                 </div>
             </div>
 
-            {{-- Quick Actions --}}
+            {{-- Fees Status Brief --}}
             <div class="col-12 col-lg-5">
                 <div class="card border-0 shadow-sm h-100">
-                    <div class="card-header bg-white border-0 pt-3 pb-0">
-                        <h6 class="fw-bold mb-0"><i class="bi bi-lightning-charge me-2 text-primary"></i>Quick Actions
-                        </h6>
+                    <div class="card-header border-0 pt-3 pb-0 d-flex align-items-center justify-content-between">
+                        <h6 class="fw-bold mb-0"><i class="bi bi-cash-coin me-2 text-primary"></i>Fees Status</h6>
+                        @if (Route::has('student.fees.index'))
+                            <a href="{{ route('student.fees.index') }}" class="small text-decoration-none">View
+                                details</a>
+                        @endif
                     </div>
-                    <div class="card-body d-grid gap-2">
+                    <div class="card-body">
 
-                        @if (Route::has('student.profile'))
-                            <a href="{{ route('student.profile') }}" class="btn btn-outline-primary text-start">
-                                <i class="bi bi-person-badge me-2"></i> View Profile
-                            </a>
+                        @if ($feesOverallStatus === 'no_fees')
+                            <div class="text-center py-4">
+                                <i class="bi bi-cash-coin fs-1 text-muted d-block mb-2"></i>
+                                <p class="text-muted mb-0">No fees assigned yet.</p>
+                            </div>
                         @else
-                            <button class="btn btn-outline-secondary text-start" disabled>
-                                <i class="bi bi-person-badge me-2"></i> View Profile
-                            </button>
-                        @endif
+                            <div class="d-flex align-items-center justify-content-between mb-2">
+                                <span
+                                    class="badge rounded-pill
+                                    @if ($feesOverallStatus === 'paid') bg-success
+                                    @elseif ($feesOverallStatus === 'partial') bg-warning text-dark
+                                    @else bg-danger @endif">
+                                    {{ ucfirst($feesOverallStatus) }}
+                                </span>
+                                <span class="small text-muted">{{ $feesPercentPaid }}% paid</span>
+                            </div>
 
-                        @if (Route::has('student.applications.index'))
-                            <a href="{{ route('student.applications.index') }}"
-                                class="btn btn-outline-primary text-start">
-                                <i class="bi bi-file-earmark-text me-2"></i> View Applications
-                            </a>
-                        @else
-                            <button class="btn btn-outline-secondary text-start" disabled>
-                                <i class="bi bi-file-earmark-text me-2"></i> View Applications
-                            </button>
-                        @endif
+                            <div class="progress mb-3" style="height: 8px;">
+                                <div class="progress-bar {{ $feesOverallStatus === 'paid' ? 'bg-success' : 'bg-primary' }}"
+                                    role="progressbar" style="width: {{ $feesPercentPaid }}%"
+                                    aria-valuenow="{{ $feesPercentPaid }}" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
 
-                        @if (Route::has('student.enrollments.index'))
-                            <a href="{{ route('student.enrollments.index') }}"
-                                class="btn btn-outline-primary text-start">
-                                <i class="bi bi-mortarboard me-2"></i> View Enrollments
-                            </a>
-                        @else
-                            <button class="btn btn-outline-secondary text-start" disabled>
-                                <i class="bi bi-mortarboard me-2"></i> View Enrollments
-                            </button>
-                        @endif
+                            <div class="d-flex justify-content-between small mb-1">
+                                <span class="text-muted">Total fees</span>
+                                <span class="fw-semibold">${{ number_format($feesTotalAssigned, 2) }}</span>
+                            </div>
+                            <div class="d-flex justify-content-between small mb-1">
+                                <span class="text-muted">Amount paid</span>
+                                <span class="fw-semibold text-success">${{ number_format($feesTotalPaid, 2) }}</span>
+                            </div>
 
-                        @if ($latestCertificate)
-                            <a href="{{ Storage::url($latestCertificate->certificate_path) }}" target="_blank"
-                                class="btn btn-success text-start">
-                                <i class="bi bi-download me-2"></i> Download Certificate
-                            </a>
+                            @if ($feesBalance > 0)
+                                <div class="d-flex justify-content-between small mt-2 pt-2 border-top">
+                                    <span class="text-danger fw-semibold">
+                                        Outstanding ({{ $feesOutstandingCount }}
+                                        {{ Str::plural('fee', $feesOutstandingCount) }})
+                                    </span>
+                                    <span class="text-danger fw-bold">${{ number_format($feesBalance, 2) }}</span>
+                                </div>
+                            @endif
                         @endif
 
                     </div>
@@ -312,7 +319,7 @@
         <div class="row g-3">
             <div class="col-12">
                 <div class="card border-0 shadow-sm">
-                    <div class="card-header bg-white border-0 pt-3 pb-0">
+                    <div class="card-header border-0 pt-3 pb-0">
                         <h6 class="fw-bold mb-0"><i class="bi bi-megaphone me-2 text-primary"></i>Announcements</h6>
                     </div>
                     <div class="card-body">

@@ -27,7 +27,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> 
                 </div>
 
                 <div class="single-slider slider-height d-flex align-items-center hero-slide-2">

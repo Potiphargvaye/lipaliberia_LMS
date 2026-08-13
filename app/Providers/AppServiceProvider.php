@@ -7,15 +7,10 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 use App\Models\User;
-use App\Models\TeacherMaterial;
-use App\Policies\TeacherMaterialPolicy;
 use Illuminate\Support\Facades\URL;
 
 class AppServiceProvider extends ServiceProvider
 {
-    protected $policies = [
-        TeacherMaterial::class => TeacherMaterialPolicy::class,
-    ];
 
     /**
      * Register any application services.
@@ -35,8 +30,7 @@ class AppServiceProvider extends ServiceProvider
             URL::forceScheme('https');
         }
 
-        // Register policies  
-        $this->registerPolicies();
+
 
         // Student Portal
         Gate::define('is-student', function (User $user) {
@@ -55,15 +49,5 @@ class AppServiceProvider extends ServiceProvider
                 'Registrar',
             ]);
         });
-    }
-
-    /**
-     * Register the application's policies.
-     */
-    protected function registerPolicies(): void
-    {
-        foreach ($this->policies as $model => $policy) {
-            Gate::policy($model, $policy);
-        }
     }
 }

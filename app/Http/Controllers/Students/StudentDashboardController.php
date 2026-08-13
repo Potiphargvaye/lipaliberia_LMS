@@ -109,6 +109,36 @@ class StudentDashboardController extends Controller
 
         $activity = $activity->sortByDesc('date')->take(6)->values();
 
+
+        // Fees Status Brief — reuses FeeAssignment::balance() and status,
+        // same as the dedicated student fees page, so this summary can
+        // never disagree with it.
+        $feeAssignments = \App\Models\FeeAssignment::whereHas('enrollment', function ($query) use ($student) {
+            $query->where('student_id', $student->id);
+        })
+            ->with('payments')
+            ->get();
+
+        $feesTotalAssigned = $feeAssignments->sum('amount');
+        $feesTotalPaid = $feeAssignments->sum(fn($a) => $a->payments->sum('amount_paid'));
+        $feesBalance = $feesTotalAssigned - $feesTotalPaid;
+
+        if ($feeAssignments->isEmpty()) {
+            $feesOverallStatus = 'no_fees';
+        } elseif ($feesBalance <= 0) {
+            $feesOverallStatus = 'paid';
+        } elseif ($feesTotalPaid > 0) {
+            $feesOverallStatus = 'partial';
+        } else {
+            $feesOverallStatus = 'pending';
+        }
+
+        $feesOutstandingCount = $feeAssignments->filter(fn($a) => $a->balance() > 0)->count();
+
+        $feesPercentPaid = $feesTotalAssigned > 0
+            ? min(100, round(($feesTotalPaid / $feesTotalAssigned) * 100))
+            : 0;
+
         return view('student.dashboard', compact(
             'student',
             'applications',
@@ -118,7 +148,13 @@ class StudentDashboardController extends Controller
             'completedEnrollment',
             'latestCertificate',
             'stats',
-            'activity'
+            'activity',
+            'feesTotalAssigned',
+            'feesTotalPaid',
+            'feesBalance',
+            'feesOverallStatus',
+            'feesOutstandingCount',
+            'feesPercentPaid'
         ));
     }
 }

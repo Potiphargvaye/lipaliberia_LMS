@@ -436,8 +436,8 @@ class Index extends Component
             ->orderBy('sort_order')
             ->get();
 
-        $enrollmentsQuery = Enrollment::query()
-            ->with(['student.user', 'course', 'cohort'])
+        // Shared filtered scope — used by BOTH the stat cards and the table below
+        $baseQuery = Enrollment::query()
             ->when($this->cohortFilter, fn($query) => $query->where('cohort_id', $this->cohortFilter))
             ->when($this->courseFilter, fn($query) => $query->where('course_id', $this->courseFilter))
             ->when($this->search, function ($query) {
@@ -447,12 +447,40 @@ class Index extends Component
             });
 
         if ($this->categoryFilter !== 'all') {
-            $enrollmentsQuery->whereHas('feeAssignments', function ($query) {
+            $baseQuery->whereHas('feeAssignments', function ($query) {
                 $query->where('fee_category_id', $this->categoryFilter);
             });
         }
 
-        $enrollments = $enrollmentsQuery
+        /*
+    |----------------------------------------------------------------
+    | Stat cards — computed from the same filtered scope, no pagination
+    |----------------------------------------------------------------
+    */
+        $statsEnrollmentIds = (clone $baseQuery)->pluck('id');
+
+        $totalStudents = (clone $baseQuery)->distinct('student_id')->count('student_id');
+
+        $assignmentQuery = FeeAssignment::whereIn('enrollment_id', $statsEnrollmentIds)
+            ->when($this->categoryFilter !== 'all', fn($q) => $q->where('fee_category_id', $this->categoryFilter));
+
+        $feesAssigned = (clone $assignmentQuery)->sum('amount');
+        $assignmentIds = (clone $assignmentQuery)->pluck('id');
+
+        $feesCollected = FeePayment::whereIn('fee_assignment_id', $assignmentIds)
+            ->sum('amount_paid');
+
+        $totalPaid = (clone $assignmentQuery)->where('status', 'pending')->count();
+
+        $outstandingBalance = $feesAssigned - $feesCollected;
+
+        /*
+    |----------------------------------------------------------------
+    | Table — same as before, just built off $baseQuery
+    |----------------------------------------------------------------
+    */
+        $enrollments = (clone $baseQuery)
+            ->with(['student.user', 'course', 'cohort'])
             ->with(['feeAssignments' => function ($query) {
                 if ($this->categoryFilter !== 'all') {
                     $query->where('fee_category_id', $this->categoryFilter);
@@ -469,6 +497,11 @@ class Index extends Component
             'categories' => $categories,
             'cohorts' => $cohorts,
             'courses' => $courses,
+            'totalStudents' => $totalStudents,
+            'feesAssigned' => $feesAssigned,
+            'feesCollected' => $feesCollected,
+            'outstandingBalance' => $outstandingBalance,
+            'totalPaid' => $totalPaid,
             'canManage' => auth()->user()->can('manage fees'),
             'canEdit' => auth()->user()->can('edit fees'),
             'canDelete' => auth()->user()->can('delete fees'),

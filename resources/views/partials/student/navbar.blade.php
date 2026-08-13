@@ -44,7 +44,7 @@
                 <button class="profile-button dropdown-toggle" type="button" data-bs-toggle="dropdown"
                     aria-expanded="false">
                     <img class="avatar-img avatar-sm" src="../assets/images/avatar/avatar.jpg" alt="Admin Hasan">
-                    <span class="profile-name d-none d-sm-inline">Admin Hasan</span>
+                    <span class="profile-name d-none d-sm-inline">LogIn UserName</span>
                 </button>
                 <ul class="dropdown-menu dropdown-menu-end">
                     <li><a class="dropdown-item" href="profile.html">Profile</a></li>
