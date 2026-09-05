@@ -470,7 +470,7 @@ class Index extends Component
         $feesCollected = FeePayment::whereIn('fee_assignment_id', $assignmentIds)
             ->sum('amount_paid');
 
-        $totalPaid = (clone $assignmentQuery)->where('status', 'pending')->count();
+        $totalPaid = (clone $assignmentQuery)->where('status', 'paid')->count();
 
         $outstandingBalance = $feesAssigned - $feesCollected;
 

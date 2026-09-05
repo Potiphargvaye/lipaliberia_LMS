@@ -40,6 +40,8 @@ class Index extends Component
 
     public $search = '';
 
+    public $courseCategoryId = null;
+    public $facilitatorIds = [];
 
     /*
     |--------------------------------------------------------------------------
@@ -61,7 +63,7 @@ class Index extends Component
 
     public function openCreateModal()
     {
-        if (!auth()->user()->can('manage fees')) {
+        if (!auth()->user()->can('manage courses')) {
             abort(403);
         }
 
@@ -70,7 +72,8 @@ class Index extends Component
             'editingId',
             'title',
             'slug',
-            'category',
+            'courseCategoryId',
+            'facilitatorIds',
             'group',
             'groupLabel',
             'programmeType',
@@ -82,7 +85,6 @@ class Index extends Component
             'fee',
             'seats',
         ]);
-
 
         $this->isActive = true;
 
@@ -99,7 +101,7 @@ class Index extends Component
 
     public function openEditModal(int $id)
     {
-        if (!auth()->user()->can('manage fees')) {
+        if (!auth()->user()->can('manage courses')) {
             abort(403);
         }
 
@@ -112,7 +114,8 @@ class Index extends Component
         $this->title = $course->title;
         $this->slug = $course->slug;
 
-        $this->category = $course->category;
+        $this->courseCategoryId = $course->course_category_id;
+        $this->facilitatorIds = $course->facilitators()->pluck('users.id')->toArray();
         $this->group = $course->group;
         $this->groupLabel = $course->group_label;
         $this->programmeType = $course->programme_type;
@@ -160,7 +163,7 @@ class Index extends Component
 
     public function save()
     {
-        if (!auth()->user()->can('manage fees')) {
+        if (!auth()->user()->can('manage courses')) {
             abort(403);
         }
 
@@ -171,7 +174,7 @@ class Index extends Component
 
             'slug' => 'required|string|max:255|alpha_dash|unique:courses,slug,' . $this->editingId,
 
-            'category' => 'nullable|string|max:255',
+            'courseCategoryId' => 'nullable|exists:course_categories,id',
 
             'programmeType' => 'nullable|string|max:255',
 
@@ -189,7 +192,7 @@ class Index extends Component
 
 
 
-        Course::updateOrCreate(
+        $course = Course::updateOrCreate(
 
             ['id' => $this->editingId],
 
@@ -199,7 +202,7 @@ class Index extends Component
 
                 'slug' => $this->slug,
 
-                'category' => $this->category,
+                'course_category_id' => $this->courseCategoryId,
 
                 'group' => $this->group,
 
@@ -227,6 +230,7 @@ class Index extends Component
 
         );
 
+        $course->facilitators()->sync($this->facilitatorIds);
 
 
         $this->showModal = false;
@@ -253,7 +257,7 @@ class Index extends Component
 
     public function confirmDelete(int $id)
     {
-        if (!auth()->user()->can('manage fees')) {
+        if (!auth()->user()->can('manage courses')) {
             abort(403);
         }
 
@@ -265,7 +269,7 @@ class Index extends Component
 
             $this->dispatch(
                 'notify',
-                message: 'Cannot delete — students are already enrolled in this course.',
+                message: 'Cannot delete students are already enrolled in this course.',
                 type: 'error'
             );
 
@@ -337,20 +341,23 @@ class Index extends Component
     public function render()
     {
         $courses = Course::query()
+            ->with('courseCategory')
             ->when($this->search, function ($query) {
                 $query->where(function ($q) {
                     $q->where('title', 'like', '%' . $this->search . '%')
-                        ->orWhere('category', 'like', '%' . $this->search . '%')
-                        ->orWhere('programme_type', 'like', '%' . $this->search . '%');
+                        ->orWhere('programme_type', 'like', '%' . $this->search . '%')
+                        ->orWhereHas('courseCategory', function ($catQuery) {
+                            $catQuery->where('name', 'like', '%' . $this->search . '%');
+                        });
                 });
             })
             ->latest()
             ->paginate(10);
 
         return view('livewire.admin.courses.index', [
-
             'courses' => $courses,
-
+            'categories' => \App\Models\CourseCategory::active()->orderBy('name')->get(),
+            'facilitatorOptions' => \App\Models\User::role('Facilitator')->orderBy('name')->get(),
         ]);
     }
 }

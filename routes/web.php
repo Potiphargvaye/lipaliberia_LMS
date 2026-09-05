@@ -47,6 +47,14 @@ require __DIR__ . '/admin/fees.php';
 require __DIR__ . '/admin/courses.php';
 require __DIR__ . '/student/dashboard.php';
 require __DIR__ . '/student/live-classes.php';
+require __DIR__ . '/admin/course-categories.php';
+require __DIR__ . '/admin/modules.php';
+require __DIR__ . '/admin/learning-materials.php';
+require __DIR__ . '/admin/quizzes.php';
+require __DIR__ . '/admin/assignments.php';
+require __DIR__ . '/admin/live-classes.php';
+
+
 
 
 // Public student registration

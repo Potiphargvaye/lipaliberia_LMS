@@ -67,13 +67,15 @@
                     </ul>
                 </li>
             @endcan
-
-            @can('view students')
+            <li class="lipa-section" style="color: #ee5705;">LESSON MANAGEMENT</li>
+            @can('manage course categories')
                 <li class="mb-0.5 group">
-                    <a href="{{ route('admin.students.index') }}"
-                        class="lipa-link {{ request()->routeIs('admin.students.*') ? 'lipa-active' : '' }}">
-                        <i class="ri-graduation-cap-line lipa-icon"></i>
-                        <span class="text-sm">Students</span>
+                    <a href="{{ route('admin.course-categories.index') }}"
+                        class="lipa-link {{ request()->routeIs('admin.course-categories.*') ? 'lipa-active' : '' }}">
+
+                        <i class="ri-folder-open-line lipa-icon"></i>
+
+                        <span class="text-sm">Course Categories</span>
                     </a>
                 </li>
             @endcan
@@ -88,16 +90,49 @@
                     <span class="text-sm">
                         Courses
                     </span>
-
                 </a>
-
             </li>
-            @can('manage grade assignments')
+
+            @can('manage modules')
                 <li class="mb-0.5 group">
-                    <a href="{{ route('admin.grade-assignments') }}"
-                        class="lipa-link {{ request()->routeIs('admin.grade-assignments') ? 'lipa-active' : '' }}">
+                    <a href="{{ route('admin.modules.index') }}"
+                        class="lipa-link {{ request()->routeIs('admin.modules.*') ? 'lipa-active' : '' }}">
+
+                        <i class="ri-stack-line lipa-icon"></i>
+
+                        <span class="text-sm">Lesson Modules</span>
+                    </a>
+                </li>
+            @endcan
+
+            @can('manage learning materials')
+                <li class="mb-0.5 group">
+                    <a href="{{ route('admin.learning-materials.index') }}"
+                        class="lipa-link {{ request()->routeIs('admin.learning-materials.*') ? 'lipa-active' : '' }}">
+
                         <i class="ri-file-list-3-line lipa-icon"></i>
-                        <span class="text-sm">Grade-Assignment</span>
+
+                        <span class="text-sm">Learning Materials</span>
+                    </a>
+                </li>
+            @endcan
+
+            @can('manage quizzes')
+                <li class="mb-0.5 group">
+                    <a href="{{ route('admin.quizzes.index') }}"
+                        class="lipa-link {{ request()->routeIs('admin.quizzes.*') ? 'lipa-active' : '' }}">
+                        <i class="ri-questionnaire-line lipa-icon"></i>
+                        <span class="text-sm">Quizzes</span>
+                    </a>
+                </li>
+            @endcan
+
+            @can('manage assignments')
+                <li class="mb-0.5 group">
+                    <a href="{{ route('admin.assignments.index') }}"
+                        class="lipa-link {{ request()->routeIs('admin.assignments.*') ? 'lipa-active' : '' }}">
+                        <i class="ri-file-edit-line lipa-icon"></i>
+                        <span class="text-sm">Assignments</span>
                     </a>
                 </li>
             @endcan
@@ -109,6 +144,26 @@
                     <span class="text-sm">Announcement</span>
                 </a>
             </li>
+
+
+            {{--
+    Insert this <li> into your sidebar partial, right after the
+    "Announcement" <li> and before the "Finance" section header
+    (or wherever makes sense in ADMIN). Gated by the new
+    'manage live classes' permission, and follows the exact same
+    lipa-link / lipa-active / routeIs() pattern already used for
+    every other item in that sidebar.
+--}}
+
+            @can('manage live classes')
+                <li class="mb-0.5 group">
+                    <a href="{{ route('admin.live-classes.index') }}"
+                        class="lipa-link {{ request()->routeIs('admin.live-classes.*') ? 'lipa-active' : '' }}">
+                        <i class="ri-live-line lipa-icon"></i>
+                        <span class="text-sm">Live Classes</span>
+                    </a>
+                </li>
+            @endcan
 
 
             {{-- ===========================================================
@@ -362,7 +417,7 @@
         font-size: 11px;
         font-weight: 700;
         letter-spacing: 0.12em;
-        color: rgba(224, 242, 254, 0.55);
+        color: rgba(245, 247, 248, 0.55);
         padding: 0 12px;
         margin: 22px 0 8px;
     }
@@ -378,7 +433,7 @@
         padding: 0.6rem 0.75rem;
         border-radius: 0.6rem;
         font-weight: 600;
-        color: rgba(255, 255, 255, 0.92);
+        color: rgba(255, 255, 255, 0.952);
         border-left: 3px solid transparent;
         transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
     }

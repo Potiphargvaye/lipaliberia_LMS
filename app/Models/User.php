@@ -10,6 +10,8 @@ use App\Notifications\SchoolResetPasswordNotification;
 
 use App\Models\Student;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 
 class User extends Authenticatable
@@ -103,10 +105,16 @@ class User extends Authenticatable
     }
 
 
-    // Add this relationship method inside your existing App\Models\User class.
-// Do not replace the file — just add this method alongside your other
-// relationships/methods.
+    public function createdModules(): HasMany
+    {
+        return $this->hasMany(Module::class, 'created_by');
+    }
 
+
+    public function facilitatedCourses(): BelongsToMany
+    {
+        return $this->belongsToMany(Course::class, 'course_facilitators')->withTimestamps();
+    }
     /**
      * The Student profile linked to this account, if this user is a student.
      * Staff/admin users will simply have this return null.
@@ -114,5 +122,15 @@ class User extends Authenticatable
     public function student(): HasOne
     {
         return $this->hasOne(Student::class);
+    }
+
+    public function assignmentSubmissions(): HasMany
+    {
+        return $this->hasMany(AssignmentSubmission::class, 'student_id');
+    }
+
+    public function quizAttempts(): HasMany
+    {
+        return $this->hasMany(QuizAttempt::class, 'student_id');
     }
 }

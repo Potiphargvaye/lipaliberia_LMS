@@ -12,7 +12,8 @@
     <div class="flex items-center gap-2.5">
         <img src="{{ asset('lipa-liberia-public-site/assets/img/logo/logo_header.png') }}" alt="LIPA Logo"
             class="h-8 w-8 object-contain rounded-md bg-white/10 p-0.5">
-        <span class="hidden sm:inline text-white font-bold text-sm tracking-wider">LIPA</span>
+        <span class="hidden sm:inline text-white font-bold text-sm tracking-wider">LIBERIA INSTITUDE OF PUBLIC
+            ADMINISTRATION</span>
     </div>
 
     <ul class="ml-auto flex items-center gap-1.5">

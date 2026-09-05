@@ -144,16 +144,9 @@
 
                         </td>
 
-
-
                         <td class="px-4 py-3 text-slate-600">
-
-                            {{ $course->category ?? '—' }}
-
+                            {{ $course->courseCategory?->name ?? '—' }}
                         </td>
-
-
-
                         <td class="px-4 py-3 text-slate-600">
 
                             {{ $course->programme_type ?? '—' }}
@@ -363,10 +356,15 @@
                                     Category
                                 </label>
 
-                                <input type="text" wire:model="category" placeholder="e.g. Short Course"
+                                <select wire:model="courseCategoryId"
                                     class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#155E8A]/30 focus:border-[#155E8A] transition-shadow">
+                                    <option value="">Select a category...</option>
+                                    @foreach ($categories as $cat)
+                                        <option value="{{ $cat->id }}">{{ $cat->name }}</option>
+                                    @endforeach
+                                </select>
 
-                                @error('category')
+                                @error('courseCategoryId')
                                     <p class="mt-1 text-xs text-[#B91C1C] font-medium">{{ $message }}</p>
                                 @enderror
                             </div>
@@ -401,6 +399,153 @@
                                 <input type="text" wire:model="groupLabel" placeholder="Display label for group"
                                     class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#155E8A]/30 focus:border-[#155E8A] transition-shadow">
                             </div>
+
+                            <div class="sm:col-span-2">
+
+                                <div class="rounded-xl border-2 border-sky-100 bg-sky-50/40 overflow-hidden">
+
+                                    {{-- Header --}}
+                                    <div class="flex items-start gap-3 px-5 py-4 border-b border-sky-100 bg-sky-50">
+
+                                        <div
+                                            class="h-10 w-10 shrink-0 rounded-lg bg-[#155E8A] text-white flex items-center justify-center shadow-sm">
+                                            <i class="fas fa-chalkboard-teacher"></i>
+                                        </div>
+
+                                        <div>
+                                            <h3 class="text-sm font-bold text-[#155E8A]">
+                                                Course Facilitators
+                                            </h3>
+
+                                            <p class="text-xs text-slate-500 mt-0.5">
+                                                Select one or more facilitators responsible for teaching this course.
+                                            </p>
+                                        </div>
+
+                                    </div>
+
+                                    {{-- Facilitator Options --}}
+                                    <div class="p-5">
+
+                                        @if ($facilitatorOptions->count())
+
+                                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+
+                                                @foreach ($facilitatorOptions as $facilitator)
+                                                    <label
+                                                        class="relative flex items-center gap-3 p-3 rounded-xl border cursor-pointer transition
+                            {{ in_array($facilitator->id, $facilitatorIds ?? [])
+                                ? 'border-[#155E8A] bg-sky-100 shadow-sm'
+                                : 'border-slate-200 bg-white hover:border-sky-300 hover:bg-sky-50' }}">
+
+                                                        {{-- Checkbox --}}
+                                                        <input type="checkbox" value="{{ $facilitator->id }}"
+                                                            wire:model="facilitatorIds"
+                                                            class="h-4 w-4 rounded border-slate-300 text-[#155E8A] focus:ring-[#155E8A]">
+                                                        {{-- Avatar --}}
+                                                        <div
+                                                            class="h-10 w-10 rounded-full flex items-center justify-center shrink-0 overflow-hidden
+    {{ in_array($facilitator->id, $facilitatorIds ?? [])
+        ? 'bg-[#155E8A] text-white'
+        : 'bg-slate-100 text-slate-500' }}">
+
+                                                            @if ($facilitator->image)
+                                                                <img src="{{ Storage::url($facilitator->image) }}"
+                                                                    alt="{{ $facilitator->name }}"
+                                                                    class="h-full w-full object-cover">
+                                                            @else
+                                                                <i class="fas fa-user-tie text-sm"></i>
+                                                            @endif
+
+                                                        </div>
+
+                                                        {{-- Name --}}
+                                                        <div class="min-w-0 flex-1">
+
+                                                            <p class="text-sm font-semibold text-slate-800 truncate">
+                                                                {{ $facilitator->name }}
+                                                            </p>
+
+                                                            <p class="text-xs text-slate-400">
+                                                                Facilitator
+                                                            </p>
+
+                                                        </div>
+
+                                                        {{-- Assigned indicator --}}
+                                                        @if (in_array($facilitator->id, $facilitatorIds ?? []))
+                                                            <div
+                                                                class="h-7 w-7 rounded-full bg-[#155E8A] text-white flex items-center justify-center shrink-0">
+
+                                                                <i class="fas fa-check text-xs"></i>
+
+                                                            </div>
+                                                        @endif
+
+                                                    </label>
+                                                @endforeach
+
+                                            </div>
+                                        @else
+                                            <div class="py-8 text-center">
+
+                                                <div
+                                                    class="mx-auto mb-3 h-12 w-12 rounded-full bg-slate-100 flex items-center justify-center text-slate-400">
+
+                                                    <i class="fas fa-user-tie"></i>
+
+                                                </div>
+
+                                                <p class="text-sm font-medium text-slate-600">
+                                                    No facilitators available.
+                                                </p>
+
+                                                <p class="text-xs text-slate-400 mt-1">
+                                                    Create a user with the Facilitator role first.
+                                                </p>
+
+                                            </div>
+
+                                        @endif
+
+                                    </div>
+
+                                    {{-- Footer --}}
+                                    @if (!empty($facilitatorIds))
+                                        <div class="px-5 py-3 bg-white border-t border-sky-100">
+
+                                            <p class="text-xs font-medium text-[#155E8A] flex items-center gap-2">
+
+                                                <i class="fas fa-check-circle"></i>
+
+                                                {{ count($facilitatorIds) }}
+                                                {{ count($facilitatorIds) === 1 ? 'facilitator assigned' : 'facilitators assigned' }}
+
+                                                <span class="text-slate-400 font-normal">
+                                                    click an assigned facilitator again to unassign.
+                                                </span>
+
+                                            </p>
+
+                                        </div>
+                                    @else
+                                        <div class="px-5 py-3 bg-white border-t border-sky-100">
+
+                                            <p class="text-xs text-slate-400 flex items-center gap-2">
+
+                                                <i class="fas fa-info-circle text-[#155E8A]"></i>
+
+                                                No facilitators assigned yet.
+
+                                            </p>
+
+                                        </div>
+                                    @endif
+
+                                </div>
+
+                            </div>
+
 
                         </div>
 
@@ -441,7 +586,7 @@
 
                             <div>
                                 <label class="block text-sm font-semibold text-slate-700 mb-1.5">
-                                    Entry Requirements
+                                    Entry Requirement
                                 </label>
 
                                 <textarea wire:model="entryRequirements" rows="2" placeholder="Prerequisites, if any"

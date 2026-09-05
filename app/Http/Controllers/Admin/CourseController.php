@@ -9,7 +9,7 @@ class CourseController extends Controller
 {
     public function index(): View
     {
-        $this->authorize('manage fees');
+        $this->authorize('manage courses');
 
         return view('admin.courses.index');
     }
